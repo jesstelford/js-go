@@ -26,8 +26,6 @@ function getRearFacingVideoSource(sources) {
 
     var videoSources = sources.filter(source => source.kind === 'videoinput')
 
-    console.log('[video sources]:', videoSources);
-
     if (!videoSources.length) {
       throw new Error('Could not find any video sources');
     }
@@ -46,10 +44,6 @@ function getRearFacingVideoSource(sources) {
       }
       return false;
     })
-
-    console.log('[rearVideoSource]:', rearVideoSource);
-
-    debugger;
 
     return rearVideoSource || videoSources[0];
 
@@ -78,6 +72,6 @@ function start() {
 start();
 
 function handleError(error) {
-  console.log('navigator.getUserMedia error: ', error);
+  console.error('navigator.getUserMedia error: ', error);
 }
 
