@@ -55,21 +55,12 @@ function getVideoStream(source) {
   return getVideoBySource(source);
 }
 
-
-function gotStream(stream) {
-  window.stream = stream; // make stream available to console
-  videoElement.srcObject = stream;
-}
-
-function start() {
-  askPermission()
+export default function start() {
+  return askPermission()
     .then(getRearFacingVideoSource)
     .then(getVideoStream)
-    .then(gotStream)
     .catch(handleError);
 }
-
-start();
 
 function handleError(error) {
   console.error('navigator.getUserMedia error: ', error);
