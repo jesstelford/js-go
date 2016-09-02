@@ -8,15 +8,18 @@
   </head>
   <body>
 
-    <a-scene>
-
-      <a-sphere position="0 0.5 -2" radius="2" color="#EF2D5E"></a-sphere>
-
-    </a-scene>
-
     <video muted autoplay></video>
 
     <script src="https://npmcdn.com/webrtc-adapter@1.4.0/out/adapter.js"></script>
     <script src="js/index.js"></script>
+
+    <a-scene>
+
+      <a-sphere position="0 1 -2" radius="0.5" color="#EF2D5E"></a-sphere>
+
+      <a-camera position="0 1.8 0">
+        <a-sphere is-anchor position="0 0 -2" radius="0.5" color="#00ff00"></a-sphere>
+      </a-camera>
+    </a-scene>
   </body>
 </html>

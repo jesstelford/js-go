@@ -1,4 +1,5 @@
 require('webrtc-adapter');
+require('./aframe/components/is-anchor');
 import stream from './video-stream';
 import aframe from 'aframe';
 
