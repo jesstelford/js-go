@@ -13,6 +13,7 @@
     "react/prefer-es6-class": ["error", "never"],
     "object-curly-spacing": ["error", "never"],
     "no-underscore-dangle": ["error", { "allowAfterThis": true }],
+    "no-unused-vars": ["error", { "argsIgnorePattern": "_" }],
     "new-cap": ["error", { "capIsNewExceptions": ["React.Children"] }]
   },
   "parserOptions": {

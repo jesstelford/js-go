@@ -24,6 +24,7 @@
     "eslint-config-airbnb": "^10.0.0",
     "eslint-plugin-import": "^1.12.0",
     "eslint-plugin-jsx-a11y": "^2.0.1",
+    "eslint-plugin-react": "^6.2.0",
     "rollupify": "^0.3.4",
     "uglifyify": "^3.0.2",
     "watchify": "^3.7.0"
