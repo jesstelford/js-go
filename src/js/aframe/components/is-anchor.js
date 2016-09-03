@@ -90,18 +90,20 @@ aframe.registerComponent('is-anchor', {
 
   init() {
 
-    this.heirarchy = [];
-    this.unlisteners = [];
+    this._heirarchy = [];
+    this._unlisteners = [];
 
     let element = this.el;
 
     do {
 
-      const unlisten = addElementToHeirarchy(element, this.heirarchy, _ => {
-        this.emit('anchorupdated', calculateAggregate(this.heirarchy));
+      const unlisten = addElementToHeirarchy(element, this._heirarchy, _ => {
+        if (this.data.active) {
+          this.el.emit('anchorupdated', {components: calculateAggregate(this._heirarchy)});
+        }
       });
 
-      this.unlisteners.push(unlisten);
+      this._unlisteners.push(unlisten);
 
       element = element.parentEl;
     } while (
@@ -121,10 +123,65 @@ aframe.registerComponent('is-anchor', {
 
   remove() {
     // Clean up listeners
-    this.unlisteners.forEach(unlisten => unlisten());
+    this._unlisteners.forEach(unlisten => unlisten());
   },
 
   update() {
-    this.emit('anchorupdated', calculateAggregate(this.heirarchy));
+    if (this.data.active) {
+      this.el.emit('anchorupdated', {components: calculateAggregate(this._heirarchy)});
+    }
   },
+});
+
+aframe.registerComponent('track-anchor', {
+
+  schema: {
+    active: {
+      type: 'boolean',
+      default: true,
+    },
+    anchor: {
+      type: 'selector',
+      default: null,
+    },
+    components: {
+      type: 'string',
+      default: 'position rotation',
+      parse(value) {
+        return value.split(' ');
+      },
+    },
+  },
+
+  init() {
+
+    const listener = ({detail: {components}}) => {
+      Object.keys(components)
+        .filter(component => this.data.components.indexOf(component) !== -1)
+        .forEach(component => {
+          // Update component with the given values
+          this.el.setAttribute(component, components[component]);
+        });
+    }
+
+    if (process.env.NODE_ENV !== 'production') {
+      if (!this.data.anchor) {
+        // eslint-disable-next-line no-console
+        console.warn('Unable to track anchor');
+        return;
+      }
+    }
+
+    this._removeListener = _ => this.data.anchor.removeEventListener('anchorupdated', listener);
+
+    this.data.anchor.addEventListener('anchorupdated', listener);
+
+  },
+
+  remove() {
+    // Clean up listeners
+    this._removeListener();
+  },
+
+
 });
