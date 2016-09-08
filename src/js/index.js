@@ -1,5 +1,4 @@
 require('webrtc-adapter');
-require('./aframe/components/is-anchor');
 
 // import stream from './video-stream'; // eslint-disable-line import/imports-first
 import aframe from 'aframe'; // eslint-disable-line import/imports-first
