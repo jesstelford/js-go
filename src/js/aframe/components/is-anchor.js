@@ -1,6 +1,8 @@
 import aframe from 'aframe';
 import deepEqual from 'deep-equal';
 
+let timeStart;
+
 function listenToComponentChanged(onChange, event) {
 
   const {newData, oldData} = event.detail;
@@ -29,49 +31,12 @@ function addElementToHeirarchy(element, heirarchy, onChange) {
 
 }
 
-function sumKeys(keys, first, second) {
-  return keys.reduce((compVals, key) => (
-    Object.assign({}, compVals, {[key]: first[key] + second[key]})
-  ), {});
-}
+function getWorldValues(element) {
 
-function sumComponentChildren(componentKeyMap, aggregate, components, newAggregate, component) {
-  return Object.assign(
-    {},
-    newAggregate,
-    {
-      [component]: sumKeys(
-        componentKeyMap[component],
-        aggregate[component],
-        components[component].data
-      ),
-    }
-  );
-}
-
-function sumComponents(aggregate, element) {
-
-  const componentKeyMap = {
-    position: ['x', 'y', 'z'],
-    rotation: ['x', 'y', 'z'],
+  return {
+    position: element.object3D.getWorldPosition(),
+    rotation: element.object3D.getWorldRotation(),
   };
-
-  const components = element.components;
-
-  return Object.keys(components)
-    .filter(component => Object.keys(componentKeyMap).indexOf(component) !== -1)
-    .reduce(sumComponentChildren.bind(null, componentKeyMap, aggregate, components), {});
-}
-
-function calculateAggregate(heirarchy) {
-
-  return heirarchy.reduce(
-    sumComponents,
-    {
-      position: {x: 0, y: 0, z: 0},
-      rotation: {x: 0, y: 0, z: 0},
-    }
-  );
 
 }
 
@@ -97,9 +62,16 @@ aframe.registerComponent('is-anchor', {
 
     do {
 
-      const unlisten = addElementToHeirarchy(element, this._heirarchy, _ => {
+      const unlisten = addElementToHeirarchy(element, this._heirarchy, ({detail: {newData}}) => {
         if (this.data.active) {
-          this.el.emit('anchorupdated', {components: calculateAggregate(this._heirarchy)});
+          if (!timeStart) {
+            timeStart = performance.now();
+          }
+          const worldValues = getWorldValues(this.el);
+          worldValues.positoin = Object.assign({}, newData);
+          const {x, y, z} = worldValues.position;
+          //console.log({x, y, z}, {x: newData.x, y: newData.y, z: newData.z - 2});
+          this.el.emit('anchorupdated', {components: worldValues});
         }
       });
 
@@ -128,7 +100,8 @@ aframe.registerComponent('is-anchor', {
 
   update() {
     if (this.data.active) {
-      this.el.emit('anchorupdated', {components: calculateAggregate(this._heirarchy)});
+      timeStart = performance.now();
+      this.el.emit('anchorupdated', {components: getWorldValues(this.el)});
     }
   },
 });
@@ -156,6 +129,9 @@ aframe.registerComponent('track-anchor', {
   init() {
 
     const listener = ({detail: {components}}) => {
+
+      //console.log('time taken:', performance.now() - timeStart);
+      timeStart = 0;
       Object.keys(components)
         .filter(component => this.data.components.indexOf(component) !== -1)
         .forEach(component => {
