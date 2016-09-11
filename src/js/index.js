@@ -1,7 +1,11 @@
+// import stream from './video-stream';
+import aframe from 'aframe';
+import aframeExtras from 'aframe-extras';
+
 require('webrtc-adapter');
 
-// import stream from './video-stream'; // eslint-disable-line import/imports-first
-import aframe from 'aframe'; // eslint-disable-line import/imports-first
+aframeExtras.physics.registerAll(aframe);
+aframeExtras.primitives.registerAll(aframe);
 
 /*
 var videoElement = document.querySelector('video');
@@ -74,10 +78,9 @@ function clientCoordsTo3DCanvasCoords(
   };
 }
 
-function run() {
-  const sphere = document.querySelector('#tracked');
-  const camera = scene.camera.el;
-  document.addEventListener('mousemove', ({clientX, clientY}) => {
+function dragItem(element, camera, depth) {
+
+  function onMouseMove({clientX, clientY}) {
 
     // scale mouse coordinates down to -1 <-> +1
     const {x: mouseX, y: mouseY} = clientCoordsTo3DCanvasCoords(
@@ -91,10 +94,31 @@ function run() {
       camera.components.camera.camera,
       camera.components.position.data,
       {x: mouseX, y: mouseY},
-      2.0
+      depth
     );
 
-    sphere.setAttribute('position', {x, y, z});
+    element.setAttribute('position', {x, y, z});
+  }
+
+  document.addEventListener('mousemove', onMouseMove);
+
+  // The "unlisten" function
+  return _ => {
+    document.removeEventListener('mousemove', onMouseMove);
+  };
+}
+
+function run() {
+  const sphere = document.querySelector('#monster-ball');
+  const camera = scene.camera.el;
+  let unlisten;
+
+  document.addEventListener('mousedown', _ => {
+    unlisten = dragItem(sphere, camera, 2.0);
+  });
+
+  document.addEventListener('mouseup', _ => {
+    unlisten && unlisten(); // eslint-disable-line no-unused-expressions
   });
 }
 

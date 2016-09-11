@@ -12,12 +12,14 @@
 
     <script src="https://npmcdn.com/webrtc-adapter@1.4.0/out/adapter.js"></script>
 
-    <a-scene>
+    <a-scene physics="debug: true">
 
-      <a-sphere id="tracked" position="0 1 -2" radius="0.5" color="#EF2D5E"></a-sphere>
-      <a-box position="0 1 -2" width="0.5" height="0.5" depth="0.5" color="#EF2D5E"></a-box>
+      <a-grid static-body></a-grid>
 
-      <a-camera position="0 1.8 0"></a-camera>
+      <a-sphere id="monster-ball" position="0 1 -2" radius="0.5" color="#EF2D5E"></a-sphere>
+      <a-box dynamic-body position="0 3 -2" width="0.5" height="0.5" depth="0.5" color="#EF2D5E"></a-box>
+
+      <a-camera look-controls-enabled="false" position="0 1.8 0"></a-camera>
     </a-scene>
 
     <script src="js/index.js"></script>
