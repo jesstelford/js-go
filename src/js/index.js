@@ -1,6 +1,7 @@
 // import stream from './video-stream';
 import aframe from 'aframe';
 import aframeExtras from 'aframe-extras';
+import deepEqual from 'deep-equal';
 
 require('webrtc-adapter');
 
@@ -176,11 +177,14 @@ function selectItem(camera, clientX, clientY) {
 
 }
 
-function dragItem(element, offset, camera, depth) {
+function dragItem(element, offset, camera, depth, mouseInfo) {
 
   const {x: offsetX, y: offsetY, z: offsetZ} = offset;
+  let lastMouseInfo = mouseInfo;
 
   function onMouseMove({clientX, clientY}) {
+
+    lastMouseInfo = {clientX, clientY};
 
     const direction = screenCoordsToDirection(
       camera.components.camera.camera,
@@ -198,11 +202,19 @@ function dragItem(element, offset, camera, depth) {
     element.setAttribute('position', {x: x - offsetX, y: y - offsetY, z: z - offsetZ});
   }
 
+  function onCameraMove({detail}) {
+    if (detail.name === 'position' && !deepEqual(detail.oldData, detail.newData)) {
+      onMouseMove(lastMouseInfo);
+    }
+  }
+
   document.addEventListener('mousemove', onMouseMove);
+  camera.addEventListener('componentchanged', onCameraMove);
 
   // The "unlisten" function
   return _ => {
     document.removeEventListener('mousemove', onMouseMove);
+    camera.removeEventListener('componentchanged', onCameraMove);
   };
 }
 
@@ -214,7 +226,7 @@ function run() {
   document.addEventListener('mousedown', ({clientX, clientY}) => {
     const {depth, offset, element} = selectItem(camera, clientX, clientY);
     if (element) {
-      unlisten = dragItem(element, offset, camera, depth);
+      unlisten = dragItem(element, offset, camera, depth, {clientX, clientY});
     }
   });
 
