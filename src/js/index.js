@@ -48,6 +48,19 @@ function screenCoordsToDirection(
 }
 
 /**
+ * @param planeNormal {THREE.Vector3}
+ * @param planeConstant {Float} Distance from origin of the plane
+ * @param rayDirection {THREE.Vector3} Direction of ray from the origin
+ *
+ * @return {THREE.Vector3} The intersection point of the ray and plane
+ */
+function rayPlaneIntersection(planeNormal, planeConstant, rayDirection) {
+  // A line from the camera position toward (and through) the plane
+  const distanceToPlane = planeConstant / planeNormal.dot(rayDirection);
+  return rayDirection.multiplyScalar(distanceToPlane);
+}
+
+/**
  * @param camera Three.js Camera instance
  * @param Object Position of the camera
  * @param Object position of the mouse (scaled to be between -1 to 1)
@@ -60,22 +73,15 @@ function directionToWorldCoords(
   depth
 ) {
 
+  // TODO: Cache these Vector3's for re-use
   const cameraPosAsVec3 = new aframe.THREE.Vector3(cameraX, cameraY, cameraZ);
   const direction = new aframe.THREE.Vector3(directionX, directionY, directionZ);
 
-  // Aligned to the world direction of the camera
-  // At the specified depth along the z axis
-  const plane = new aframe.THREE.Plane(
-    camera.getWorldDirection().clone().negate(),
-    depth
-  );
-
   // A line from the camera position toward (and through) the plane
-  const newPosition = plane.intersectLine(
-    new aframe.THREE.Line3(
-      new aframe.THREE.Vector3(),
-      direction.multiplyScalar(100000.0)
-    )
+  const newPosition = rayPlaneIntersection(
+    camera.getWorldDirection(),
+    depth,
+    direction
   );
 
   // Reposition back to the camera position
