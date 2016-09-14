@@ -21,10 +21,58 @@ stream().then(gotStream);
 
 const scene = document.querySelector('a-scene');
 
+function degToRad(degrees) {
+  return degrees * (Math.PI / 180);
+}
+
+function unproject(vector, camera) {
+
+  const cameraRotationEuler = new aframe.THREE.Euler(
+    degToRad(camera.components.rotation.data.x),
+    degToRad(camera.components.rotation.data.y),
+    degToRad(camera.components.rotation.data.z),
+    'XYZ' // TODO: correct?
+  );
+
+  const cameraPosition = new aframe.THREE.Vector3(
+    camera.components.position.data.x,
+    camera.components.position.data.y,
+    camera.components.position.data.z
+  );
+
+  const matrix = new aframe.THREE.Matrix4();
+
+  const cameraWorld = new aframe.THREE.Matrix4();
+  cameraWorld.makeRotationFromEuler(cameraRotationEuler);
+  cameraWorld.setPosition(cameraPosition);
+
+  matrix.multiplyMatrices(
+    cameraWorld,
+    matrix.getInverse(camera.components.camera.camera.projectionMatrix)
+  );
+
+  return vector.applyProjection(matrix);
+
+}
+
+function clientCoordsTo3DCanvasCoords(
+  clientX,
+  clientY,
+  offsetX,
+  offsetY,
+  clientWidth,
+  clientHeight
+) {
+  return {
+    x: (((clientX - offsetX) / clientWidth) * 2) - 1,
+    y: (-((clientY - offsetY) / clientHeight) * 2) + 1,
+  };
+}
+
 function screenCoordsToDirection(
-  camera,
+  aframeCamera,
   {x: cameraX, y: cameraY, z: cameraZ},
-  {x: clientX, y: clientY},
+  {x: clientX, y: clientY}
 ) {
 
   // scale mouse coordinates down to -1 <-> +1
@@ -36,9 +84,15 @@ function screenCoordsToDirection(
   );
 
   // apply camera transformation from near-plane of mouse x/y into 3d space
-  const projectedVector = new aframe.THREE
-    .Vector3(mouseX, mouseY, -1)
-    .unproject(camera);
+  // NOTE: This should be replaced with THREE code directly once the aframe bug
+  // is fixed:
+  // const projectedVector = new aframe.THREE
+  //  .Vector3(mouseX, mouseY, -1)
+  //  .unproject(threeCamera);
+  const projectedVector = unproject(
+    new aframe.THREE.Vector3(mouseX, mouseY, -1),
+    aframeCamera
+  );
 
   const cameraPosAsVec3 = new aframe.THREE.Vector3(cameraX, cameraY, cameraZ);
 
@@ -92,26 +146,12 @@ function directionToWorldCoords(
 
 }
 
-function clientCoordsTo3DCanvasCoords(
-  clientX,
-  clientY,
-  offsetX,
-  offsetY,
-  clientWidth,
-  clientHeight
-) {
-  return {
-    x: (((clientX - offsetX) / clientWidth) * 2) - 1,
-    y: (-((clientY - offsetY) / clientHeight) * 2) + 1,
-  };
-}
-
 function selectItem(camera, clientX, clientY) {
 
   const {x: directionX, y: directionY, z: directionZ} = screenCoordsToDirection(
-    camera.components.camera.camera,
+    camera,
     camera.components.position.data,
-    {x: clientX, y: clientY},
+    {x: clientX, y: clientY}
   );
 
   const {x: cameraX, y: cameraY, z: cameraZ} = camera.components.position.data;
@@ -133,16 +173,15 @@ function selectItem(camera, clientX, clientY) {
   // Push meshes onto list of objects to intersect.
   // TODO: Schema variables
   if (selector) {
-    objectEls = camera.sceneEl.querySelectorAll(selector);
+    const objectEls = camera.sceneEl.querySelectorAll(selector);
     objects = [];
-    for (i = 0; i < objectEls.length; i++) {
+    for (let i = 0; i < objectEls.length; i++) {
       objects.push(objectEls[i].object3D);
     }
-    return;
+  } else {
+    // If objects not defined, intersect with everything.
+    objects = camera.sceneEl.object3D.children;
   }
-
-  // If objects not defined, intersect with everything.
-  objects = camera.sceneEl.object3D.children;
 
   // TODO: `recursive` as Schema variables
   const recursive = true;
@@ -154,7 +193,7 @@ function selectItem(camera, clientX, clientY) {
     // Only keep ones that are visible
     .filter(intersection => intersection.object.parent.visible)
     // The first element is the closest (TODO: Confirm this is always true)
-    [0];
+    [0]; // eslint-disable-line no-unexpected-multiline
 
   if (!intersected) {
     return {};
@@ -187,9 +226,9 @@ function dragItem(element, offset, camera, depth, mouseInfo) {
     lastMouseInfo = {clientX, clientY};
 
     const direction = screenCoordsToDirection(
-      camera.components.camera.camera,
+      camera,
       camera.components.position.data,
-      {x: clientX, y: clientY},
+      {x: clientX, y: clientY}
     );
 
     const {x, y, z} = directionToWorldCoords(
@@ -219,7 +258,6 @@ function dragItem(element, offset, camera, depth, mouseInfo) {
 }
 
 function run() {
-  const sphere = document.querySelector('#monster-ball');
   const camera = scene.camera.el;
   let unlisten;
 
