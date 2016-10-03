@@ -8,7 +8,7 @@
     "test:lint": "eslint ./src",
     "start": "sh -c 'cd lib && node server.js'",
     "watch": "npm run build && watchify --debug --verbose -t babelify -t [envify --NODE_ENV development ] src/js/index.js -o lib/js/index.js & npm run start",
-    "build": "mkdir -p lib/js && cp src/index.html lib/ && cp src/server.js lib/ && cp src/key.pem lib/ && cp src/cert.pem lib/"
+    "build": "mkdir -p lib/js && cp src/index.html lib/ && cp src/server.js lib/ && cp src/key.pem lib/ && cp src/cert.pem lib/ && cp -r src/css lib/"
   },
   "keywords": [],
   "author": "",
@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "aframe": "^0.3.1",
+    "aframe-click-drag-component": "^1.1.0",
     "aframe-extras": "^2.3.2",
     "deep-equal": "^1.0.1",
     "webrtc-adapter": "^2.0.2"

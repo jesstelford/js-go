@@ -1,15 +1,11 @@
-'use strict';
-
-var videoElement = document.querySelector('video');
-
 function getVideoBySource(videoSource) {
-  var constraints = {
+  const constraints = {
     video: {
-      deviceId: videoSource && videoSource.deviceId ? {exact: videoSource.deviceId} : undefined
-    }
+      deviceId: videoSource && videoSource.deviceId ? {exact: videoSource.deviceId} : undefined,
+    },
   };
 
-  return navigator.mediaDevices.getUserMedia(constraints)
+  return navigator.mediaDevices.getUserMedia(constraints);
 }
 
 function askPermission() {
@@ -20,20 +16,20 @@ function getDevices() {
   return navigator.mediaDevices.enumerateDevices();
 }
 
-function getRearFacingVideoSource(sources) {
+function getRearFacingVideoSource() {
 
-  return getDevices().then(function (sources) {
+  return getDevices().then(sources => {
 
-    var videoSources = sources.filter(source => source.kind === 'videoinput')
+    const videoSources = sources.filter(source => source.kind === 'videoinput');
 
     if (!videoSources.length) {
       throw new Error('Could not find any video sources');
     }
 
-    var rearVideoSource;
+    let rearVideoSource;
 
     videoSources.some(function(sourceInfo) {
-      var labelLower = sourceInfo.label.toLowerCase();
+      const labelLower = sourceInfo.label.toLowerCase();
       if (
         labelLower.indexOf('back') !== -1
         || labelLower.indexOf('environment') !== -1
@@ -43,7 +39,7 @@ function getRearFacingVideoSource(sources) {
         return true;
       }
       return false;
-    })
+    });
 
     return rearVideoSource || videoSources[0];
 
@@ -55,14 +51,14 @@ function getVideoStream(source) {
   return getVideoBySource(source);
 }
 
+function handleError(error) {
+  // eslint-disable-next-line no-console
+  console.error('navigator.getUserMedia error: ', error);
+}
+
 export default function start() {
   return askPermission()
     .then(getRearFacingVideoSource)
     .then(getVideoStream)
     .catch(handleError);
 }
-
-function handleError(error) {
-  console.error('navigator.getUserMedia error: ', error);
-}
-
