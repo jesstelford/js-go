@@ -5,6 +5,8 @@
     <title>Hello, World! • A-Frame</title>
     <meta name="description" content="Hello, World! • A-Frame">
     <link rel="stylesheet" type="text/css" href="css/styles.css" />
+
+    <script src="js/index.js"></script>
   </head>
   <body>
 
@@ -14,14 +16,32 @@
 
     <a-scene class="scene" physics="debug: true">
 
-      <a-grid static-body></a-grid>
+      <a-grid static-body />
 
-      <a-sphere click-drag dynamic-body="mass: 20" id="monster-ball" position="0 1 -2" radius="0.5" color="#EF2D5E"></a-sphere>
-      <a-box dynamic-body position="0 3 -2" width="0.5" height="0.5" depth="0.5" color="#EF2D5E"></a-box>
+      <a-sphere
+        id="monster-ball"
+        click-drag
+        dynamic-body="mass: 20"
+        position="0 1 -2"
+        radius="0.5"
+        color="#EF2D5E"
+      />
 
-      <a-camera position="0 1.8 0"></a-camera>
+      <a-box
+        dynamic-body
+        position="0 3 -2"
+        width="0.5"
+        height="0.5"
+        depth="0.5"
+        color="#EF2D5E"
+      />
+
+      <a-entity
+        camera="userHeight: 1.6"
+        keyboard-controls="mode: fps"
+        universal-controls="movementEnabled: false; rotationControls: hmd"
+      />
+
     </a-scene>
-
-    <script src="js/index.js"></script>
   </body>
 </html>
