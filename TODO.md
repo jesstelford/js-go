@@ -67,3 +67,12 @@ http://blog.webkid.io/3d-map-library-roundup/
 
 * WebRTC (is hard)
 * WebTorrent (is easier)
+
+## Code
+
+- Use `aframe-react` to handle scene.
+  - Needs modifying to support any `onX` events
+    (`Object.keys(this.props).filter(key => key.indexOf('on') === 0).map(convertToSnakeCaseAndAttachEventListener)`)
+  - Use it to enable / disable the `<a-scene>`
+  - Structure code to support multiple different scenes
+  - Start on map scene
