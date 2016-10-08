@@ -14,33 +14,30 @@
 
     <video muted autoplay></video>
 
-    <a-scene class="scene" physics="debug: true">
-
-      <a-grid static-body />
+    <a-scene class="scene">
 
       <a-sphere
         id="monster-ball"
-        click-drag
-        dynamic-body="mass: 20"
-        position="0 1 -2"
+        position="0 0 0"
         radius="0.5"
         color="#EF2D5E"
       />
 
       <a-box
-        dynamic-body
-        position="0 3 -2"
+        position="0 1 0"
         width="0.5"
         height="0.5"
         depth="0.5"
         color="#EF2D5E"
       />
 
-      <a-entity
-        camera="userHeight: 1.6"
-        keyboard-controls="mode: fps"
-        universal-controls="movementEnabled: false; rotationControls: hmd"
-      />
+      <a-entity position="0 0 3">
+        <a-entity
+          camera
+          keyboard-controls="mode: fps"
+          universal-controls="movementEnabled: false; rotationControls: hmd"
+        />
+      </a-entity>
 
     </a-scene>
   </body>

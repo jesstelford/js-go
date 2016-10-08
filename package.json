@@ -7,8 +7,8 @@
     "test": "npm run test:lint",
     "test:lint": "eslint ./src",
     "start": "sh -c 'cd lib && node server.js'",
-    "watch": "npm run build && watchify --debug --verbose -t babelify -t [envify --NODE_ENV development ] src/js/index.js -o lib/js/index.js & npm run start",
-    "build": "mkdir -p lib/js && cp src/index.html lib/ && cp src/server.js lib/ && cp src/key.pem lib/ && cp src/cert.pem lib/ && cp -r src/css lib/"
+    "pre-build": "mkdir -p lib/js && cp src/index.html lib/ && cp src/server.js lib/ && cp -r src/css lib/",
+    "build": "npm run pre-build && browserify --debug --verbose -t babelify -t [envify --NODE_ENV development ] src/js/index.js -o lib/js/index.js"
   },
   "keywords": [],
   "author": "",
@@ -26,8 +26,7 @@
     "eslint-plugin-jsx-a11y": "^2.0.1",
     "eslint-plugin-react": "^6.2.0",
     "rollupify": "^0.3.4",
-    "uglifyify": "^3.0.2",
-    "watchify": "^3.7.0"
+    "uglifyify": "^3.0.2"
   },
   "dependencies": {
     "aframe": "^0.3.1",
@@ -35,6 +34,7 @@
     "aframe-extras": "^2.5.3",
     "aframe-keyboard-controls": "^1.2.1",
     "deep-equal": "^1.0.1",
+    "semver": "^5.3.0",
     "webrtc-adapter": "^2.0.2"
   },
   "babel": {

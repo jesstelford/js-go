@@ -1,16 +1,8 @@
-const https = require('https');
+const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-// Generate a key with:
-// $ openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 3001 -nodes
-const options = {
-  key: fs.readFileSync('./key.pem'),
-  cert: fs.readFileSync('./cert.pem')
-};
-
-// From https://developer.mozilla.org/en-US/docs/Node_server_without_framework
-https.createServer(options, (request, response) => {
+http.createServer((request, response) => {
     console.log('request ', request.url);
 
     var filePath = '.' + request.url;
