@@ -1,13 +1,16 @@
 import aframe from 'aframe';
 import aframeExtras from 'aframe-extras';
 import registerClickDragComponent from 'aframe-click-drag-component';
+import registerFrustumLockComponent from 'aframe-frustum-lock-component';
+import registerVideoBillboard from 'aframe-video-billboard';
 import aframeKeyboardControls from 'aframe-keyboard-controls';
-import stream from './video-stream';
 
 require('webrtc-adapter');
 
 aframe.registerComponent('keyboard-controls', aframeKeyboardControls);
 registerClickDragComponent(aframe);
+registerFrustumLockComponent(aframe);
+registerVideoBillboard(aframe);
 aframeExtras.physics.registerAll(aframe);
 aframeExtras.primitives.registerAll(aframe);
 aframeExtras.controls.registerAll(aframe);
@@ -51,12 +54,6 @@ function run() {
 
 document.addEventListener('DOMContentLoaded', _ => {
   const scene = document.querySelector('a-scene');
-  const videoElement = document.querySelector('video');
-
-  function gotStream(videoStream) {
-    window.stream = videoStream; // make stream available to console
-    videoElement.srcObject = videoStream;
-  }
 
   if (scene.hasLoaded) {
     run();
@@ -64,5 +61,4 @@ document.addEventListener('DOMContentLoaded', _ => {
     scene.addEventListener('loaded', run);
   }
 
-  //stream().then(gotStream);
 });

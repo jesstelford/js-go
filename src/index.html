@@ -10,13 +10,9 @@
   </head>
   <body>
 
-    <script src="https://npmcdn.com/webrtc-adapter@1.4.0/out/adapter.js"></script>
+    <a-scene class="scene" physics>
 
-    <video muted autoplay></video>
-
-    <a-scene class="scene" physics="debug: true">
-
-      <a-grid static-body />
+      <a-grid static-body position="0 0 0"></a-grid>
 
       <a-sphere
         id="monster-ball"
@@ -25,7 +21,7 @@
         position="0 1 -2"
         radius="0.5"
         color="#EF2D5E"
-      />
+      ></a-sphere>
 
       <a-box
         dynamic-body
@@ -34,13 +30,19 @@
         height="0.5"
         depth="0.5"
         color="#EF2D5E"
-      />
+      ></a-box>
 
       <a-entity
         camera="userHeight: 1.6"
         keyboard-controls="mode: fps"
         universal-controls="movementEnabled: false; rotationControls: hmd"
-      />
+        position="0 1.6 4"
+      >
+        <a-video-billboard
+          frustum-lock="widthProperty: video-billboard.minWidth; heightProperty: video-billboard.minHeight; depth: 10;"
+          position="0 0 0"
+        ></a-video-billboard>
+      </a-entity>
 
     </a-scene>
   </body>
