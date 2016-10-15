@@ -76,3 +76,4 @@ http://blog.webkid.io/3d-map-library-roundup/
   - Use it to enable / disable the `<a-scene>`
   - Structure code to support multiple different scenes
   - Start on map scene
+- Fix the fullscreen black-background issue: https://aframevr.slack.com/archives/projects/p1475909091000860
