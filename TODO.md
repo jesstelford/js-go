@@ -1,8 +1,3 @@
-Map:
-
-http://gis.stackexchange.com/a/94017
-https://github.com/OSMBuildings/OSMBuildings
-http://blog.webkid.io/3d-map-library-roundup/
 
 ## Talk Structure
 
@@ -71,9 +66,10 @@ http://blog.webkid.io/3d-map-library-roundup/
 ## Code
 
 - Use `aframe-react` to handle scene.
-  - Needs modifying to support any `onX` events
-    (`Object.keys(this.props).filter(key => key.indexOf('on') === 0).map(convertToSnakeCaseAndAttachEventListener)`)
   - Use it to enable / disable the `<a-scene>`
   - Structure code to support multiple different scenes
   - Start on map scene
-- Fix the fullscreen black-background issue: https://aframevr.slack.com/archives/projects/p1475909091000860
+
+### Map
+
+- Local Tile Server with [`tileserver-gl-light` from the TileServer GL project](https://github.com/klokantech/tileserver-gl)
