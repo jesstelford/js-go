@@ -1,5 +1,6 @@
 const https = require('https');
 const fs = require('fs');
+const url = require('url');
 const path = require('path');
 
 // Generate a key with:
@@ -13,7 +14,7 @@ const options = {
 https.createServer(options, (request, response) => {
   console.log('request ', request.url);
 
-  let filePath = `.${request.url}`;
+  let filePath = `.${url.parse(request.url).pathname}`;
   if (filePath === './') {
     filePath = './index.html';
   }
