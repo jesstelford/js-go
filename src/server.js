@@ -6,8 +6,8 @@ const path = require('path');
 // Generate a key with:
 // $ openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 3001 -nodes
 const options = {
-  key: fs.readFileSync('../key.pem'),
-  cert: fs.readFileSync('../cert.pem'),
+  key: fs.readFileSync('./key.pem'),
+  cert: fs.readFileSync('./cert.pem'),
 };
 
 // From https://developer.mozilla.org/en-US/docs/Node_server_without_framework
