@@ -3,7 +3,7 @@ import React from 'react';
 
 const Catch = React.createClass({
   onDragstart() {
-    this._monsterBallEl.pause();
+    this._monsterBallEl.components['dynamic-body'].pause();
   },
 
   onDragend({detail: {velocity}}) {
@@ -29,7 +29,7 @@ const Catch = React.createClass({
 
     rotatedVelocity.applyAxisAngle(rotation, Math.PI / 8);
 
-    this._monsterBallEl.play();
+    this._monsterBallEl.components['dynamic-body'].play();
     this._monsterBallEl.body.velocity.set(rotatedVelocity.x, rotatedVelocity.y, rotatedVelocity.z);
   },
 
