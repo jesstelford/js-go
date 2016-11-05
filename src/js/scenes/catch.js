@@ -1,45 +1,88 @@
 import aframe from 'aframe';
 import React from 'react';
+import {domFromString} from '../lib/dom';
 
 const Catch = React.createClass({
-  onDragstart() {
-    this._monsterBallEl.components['dynamic-body'].pause();
-  },
 
   onDragend({detail: {velocity}}) {
 
-    // We're dealing with a very heavy ball (mass: 100), so we want to
-    // reduce the velocity a little
-    const velocityDamp = 0.3;
+    this._ballInFlight = true;
+    this._ballPosition = this._monsterBallEl.object3D.getWorldPosition().toArray().join(' ');
 
-    const camera = this._monsterBallEl.sceneEl.camera;
+    this._monsterBallEl.pause();
 
-    // The "up" vector of the camera
-    const rotation = camera.up.clone();
-    // crossed with the "forward" / direction vector of the camera
-    // gives us the 3rd orthogonal axis of the camera's rotation
-    rotation.cross(camera.getWorldDirection());
+    // Insert a copy of the ball which is globally positioned
+    this._monsterBallEl.parentNode.removeChild(this._monsterBallEl);
 
-    // A damped down velocity vector
-    const rotatedVelocity = new aframe.THREE.Vector3(
-      velocity.x * velocityDamp,
-      velocity.y * velocityDamp,
-      velocity.z * velocityDamp
-    );
+    this._monsterBallEl = domFromString(this.renderMonsterBall());
 
-    rotatedVelocity.applyAxisAngle(rotation, Math.PI / 8);
+    this._scene.appendChild(this._monsterBallEl);
 
-    this._monsterBallEl.components['dynamic-body'].play();
-    this._monsterBallEl.body.velocity.set(rotatedVelocity.x, rotatedVelocity.y, rotatedVelocity.z);
+    const run = _ => {
+
+      this._monsterBallEl.removeEventListener('loaded', run);
+
+      // We're dealing with a very heavy ball (mass: 100), so we want to
+      // reduce the velocity a little
+      const velocityDamp = 0.3;
+
+      const camera = this._monsterBallEl.sceneEl.camera;
+
+      // The "up" vector of the camera
+      const rotation = camera.up.clone();
+      // crossed with the "forward" / direction vector of the camera
+      // gives us the 3rd orthogonal axis of the camera's rotation
+      rotation.cross(camera.getWorldDirection());
+
+      // A damped down velocity vector
+      const rotatedVelocity = new aframe.THREE.Vector3(
+        velocity.x * velocityDamp,
+        velocity.y * velocityDamp,
+        velocity.z * velocityDamp
+      );
+
+      rotatedVelocity.applyAxisAngle(rotation, Math.PI / 8);
+
+      // this._monsterBallEl.play();
+
+      // Set the velocity to make it fly!
+      this._monsterBallEl.body.velocity.set(
+        rotatedVelocity.x,
+        rotatedVelocity.y,
+        rotatedVelocity.z
+      );
+
+    };
+
+    if (!this._monsterBallEl.hasLoaded) {
+      this._monsterBallEl.addEventListener('loaded', run);
+    } else {
+      run();
+    }
+
   },
 
   onRef(ref) {
+
+    this._scene = ref.querySelector('a-scene');
+
     if (!ref) {
       return;
     }
     this._monsterBallEl = ref.querySelector('#monster-ball');
-    this._monsterBallEl.addEventListener('dragstart', this.onDragstart);
     this._monsterBallEl.addEventListener('dragend', this.onDragend);
+  },
+
+  renderMonsterBall() {
+    return `
+      <a-sphere
+        id="monster-ball"
+        ${this._ballInFlight ? 'dynamic-body' : 'click-drag'}
+        position="${this._ballPosition || '0 0 -2'}"
+        radius="0.5"
+        color="#EF2D5E"
+      ></a-sphere>
+    `.trim();
   },
 
   renderAframe() {
@@ -49,15 +92,6 @@ const Catch = React.createClass({
 
         <a-grid static-body position="0 0 0"></a-grid>
 
-        <a-sphere
-          id="monster-ball"
-          click-drag
-          dynamic-body="mass: 20"
-          position="0 4 -2"
-          radius="0.5"
-          color="#EF2D5E"
-        ></a-sphere>
-
         <a-box
           dynamic-body
           position="0 3 -2"
@@ -66,6 +100,8 @@ const Catch = React.createClass({
           depth="0.5"
           color="#EF2D5E"
         ></a-box>
+
+        ${this._ballInFlight ? this.renderMonsterBall() : ''}
 
         <a-entity
           camera="userHeight: 1.6"
@@ -77,6 +113,9 @@ const Catch = React.createClass({
             frustum-lock="widthProperty: video-billboard.minWidth; heightProperty: video-billboard.minHeight; depth: 10;"
             position="0 0 0"
           ></a-video-billboard>
+
+          ${/* Ball starts attached to the camera */''}
+          ${this._ballInFlight ? '' : this.renderMonsterBall()}
         </a-entity>
 
       </a-scene>
