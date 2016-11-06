@@ -8,9 +8,9 @@
 1. Catching Pokemon
 1. Location aware maps
 1. Save to homescreen
-1. Shared world
 1. Pokestops
 1. Gyms
+1. Shared world
 1. Offline
 1. Catching Pokemon revisited (VR)
 1. PvP trainer battles
@@ -32,12 +32,6 @@
 * Manifests
 * ??
 
-### Shared world
-
-* Node.js
-* MongoDB(?)
-* Scalable servers (now.sh)
-
 ### Pokestops
 
 * Public locations data (Foursquare? Google Locations? Yahoo Locations?)
@@ -46,6 +40,12 @@
 
 * Same as pokestops
 * But has current state (owner)
+
+### Shared world
+
+* Node.js
+* MongoDB(?)
+* Scalable servers (now.sh)
 
 ### Offline
 
