@@ -136,9 +136,18 @@ const Catch = React.createClass({
     `.trim();
   },
 
+  getOutOfDodge() {
+    console.log('run away!');
+  },
+
   render() {
     return (
-      <div ref={this.onRef} dangerouslySetInnerHTML={{__html: this.renderAframe()}} />
+      <div>
+        <div ref={this.onRef} dangerouslySetInnerHTML={{__html: this.renderAframe()}} />
+        <div style={{position: 'absolute', top: '10px', right: '10px', backgroundColor: 'white', padding: '10px'}} onClick={this.getOutOfDodge}>
+          Run
+        </div>
+      </div>
     );
   },
 });
