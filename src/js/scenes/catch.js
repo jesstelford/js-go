@@ -24,7 +24,7 @@ const Catch = React.createClass({
 
       // We're dealing with a very heavy ball (mass: 100), so we want to
       // reduce the velocity a little
-      const velocityDamp = 0.3;
+      const velocityDamp = 0.6;
 
       const camera = this._monsterBallEl.sceneEl.camera;
 
@@ -41,9 +41,7 @@ const Catch = React.createClass({
         velocity.z * velocityDamp
       );
 
-      rotatedVelocity.applyAxisAngle(rotation, Math.PI / 8);
-
-      // this._monsterBallEl.play();
+      rotatedVelocity.applyAxisAngle(rotation, Math.PI / 4);
 
       // Set the velocity to make it fly!
       this._monsterBallEl.body.velocity.set(
@@ -77,11 +75,24 @@ const Catch = React.createClass({
     return `
       <a-sphere
         id="monster-ball"
-        ${this._ballInFlight ? 'dynamic-body="mass: 200"' : 'click-drag'}
-        position="${this._ballPosition || '0 0 -2'}"
-        radius="0.5"
+        ${this._ballInFlight ? 'dynamic-body="mass: 20"' : 'click-drag'}
+        position="${this._ballPosition || '0 -0.5 -1'}"
+        radius="0.1"
         color="#EF2D5E"
       ></a-sphere>
+    `.trim();
+  },
+
+  renderMonster() {
+    return `
+      <a-box
+        static-body
+        position="0 0.5 -2"
+        width="0.5"
+        height="1"
+        depth="0.5"
+        color="#EF2D5E"
+      ></a-box>
     `.trim();
   },
 
@@ -90,16 +101,10 @@ const Catch = React.createClass({
     return `
       <a-scene debug class="scene" physics>
 
+        ${/* TODO: Make this transparent */''}
         <a-grid static-body position="0 0 0"></a-grid>
 
-        <a-box
-          dynamic-body
-          position="0 3 -2"
-          width="0.5"
-          height="0.5"
-          depth="0.5"
-          color="#EF2D5E"
-        ></a-box>
+        ${this.renderMonster()}
 
         ${this._ballInFlight ? this.renderMonsterBall() : ''}
 
