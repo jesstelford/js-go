@@ -77,7 +77,7 @@ const Catch = React.createClass({
     return `
       <a-sphere
         id="monster-ball"
-        ${this._ballInFlight ? 'dynamic-body' : 'click-drag'}
+        ${this._ballInFlight ? 'dynamic-body="mass: 200"' : 'click-drag'}
         position="${this._ballPosition || '0 0 -2'}"
         radius="0.5"
         color="#EF2D5E"
