@@ -18,6 +18,8 @@ const Catch = React.createClass({
 
     this._scene.appendChild(this._monsterBallEl);
 
+    // necessary if the user starts dragging before the physics system has
+    // finished initializing
     const run = _ => {
 
       this._monsterBallEl.removeEventListener('loaded', run);
@@ -101,8 +103,15 @@ const Catch = React.createClass({
     return `
       <a-scene debug class="scene" physics>
 
-        ${/* TODO: Make this transparent */''}
-        <a-grid static-body position="0 0 0"></a-grid>
+        ${/* Our transparent "ground" */''}
+        <a-plane
+          static-body
+          position="0 0 0"
+          rotation="-90 0 0"
+          width="100"
+          height="100"
+          visible="false"
+        ></a-plane>
 
         ${this.renderMonster()}
 
