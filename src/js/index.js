@@ -8,8 +8,7 @@ import registerVideoBillboard from 'aframe-video-billboard';
 import aframeKeyboardControls from 'aframe-keyboard-controls';
 import registerMap from 'aframe-map';
 
-import CatchScene from './scenes/catch';
-import MapScene from './scenes/map';
+import JSGo from './components/js-go';
 
 require('webrtc-adapter');
 
@@ -22,5 +21,5 @@ aframeExtras.physics.registerAll(aframe);
 aframeExtras.controls.registerAll(aframe);
 
 document.addEventListener('DOMContentLoaded', _ => {
-  ReactDOM.render(<MapScene />, document.querySelector('#catch-scene'));
+  ReactDOM.render(<JSGo />, document.querySelector('#catch-scene'));
 });

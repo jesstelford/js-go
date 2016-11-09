@@ -4,6 +4,11 @@ import {domFromString} from '../lib/dom';
 
 const Catch = React.createClass({
 
+  propTypes: {
+    onGetOutOfDodge: React.PropTypes.func.isRequired,
+    onCatchMonster: React.PropTypes.func.isRequired,
+  },
+
   onDragend({detail: {velocity}}) {
 
     this._ballInFlight = true;
@@ -64,13 +69,22 @@ const Catch = React.createClass({
 
   onRef(ref) {
 
-    this._scene = ref.querySelector('a-scene');
-
     if (!ref) {
       return;
     }
+
+    this._scene = ref.querySelector('a-scene');
+
     this._monsterBallEl = ref.querySelector('#monster-ball');
     this._monsterBallEl.addEventListener('dragend', this.onDragend);
+  },
+
+  getOutOfDodge() {
+    console.log('run away!');
+  },
+
+  componentWillUnmount() {
+    // Tear down
   },
 
   renderMonsterBall() {
@@ -136,16 +150,33 @@ const Catch = React.createClass({
     `.trim();
   },
 
-  getOutOfDodge() {
-    console.log('run away!');
-  },
-
   render() {
     return (
       <div>
         <div ref={this.onRef} dangerouslySetInnerHTML={{__html: this.renderAframe()}} />
-        <div style={{position: 'absolute', top: '10px', right: '10px', backgroundColor: 'white', padding: '10px'}} onClick={this.getOutOfDodge}>
+        <div
+          style={{
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+            backgroundColor: 'white',
+            padding: '10px',
+          }}
+          onClick={this.props.onGetOutOfDodge}
+        >
           Run
+        </div>
+        <div
+          style={{
+            position: 'absolute',
+            top: '10px',
+            left: '10px',
+            backgroundColor: 'white',
+            padding: '10px',
+          }}
+          onClick={this.props.onCatchMonster}
+        >
+          Catch it!
         </div>
       </div>
     );

@@ -7,6 +7,11 @@ const venueCache = {};
 
 const Map = React.createClass({
 
+  propTypes: {
+    onHuntMonster: React.PropTypes.func.isRequired,
+    onOpenMenu: React.PropTypes.func.isRequired,
+  },
+
   // Creating an inverted cone and adding it to the scene as a place marker
   addMarker() {
 
@@ -76,6 +81,7 @@ const Map = React.createClass({
 
   onSceneLoaded() {
     const currentLocationEl = this._scene.querySelector('#current-location');
+    this._mapEl = this._scene.querySelector('a-map');
 
     // Once the map is loaded
     this._mapEl.addEventListener('map-loaded', _ => {
@@ -87,7 +93,7 @@ const Map = React.createClass({
       };
 
       // Get the user's location from the browser
-      navigator.geolocation.watchPosition(position => {
+      this._geoWatchId = navigator.geolocation.watchPosition(position => {
 
         const long = position.coords.longitude;
         const lat = position.coords.latitude;
@@ -129,6 +135,17 @@ const Map = React.createClass({
       this._scene.addEventListener('loaded', run);
     } else {
       run();
+    }
+  },
+
+  loadMenu() {
+    // eslint-disable-next-line no-console
+    console.log('load menu');
+  },
+
+  componentWillUnmount() {
+    if (this._geoWatchId) {
+      navigator.geolocation.clearWatch(this._geoWatchId);
     }
   },
 
@@ -176,11 +193,6 @@ const Map = React.createClass({
     `.trim();
   },
 
-  loadMenu() {
-    // eslint-disable-next-line no-console
-    console.log('load menu');
-  },
-
   render() {
     return (
       <div>
@@ -193,9 +205,21 @@ const Map = React.createClass({
             backgroundColor: 'white',
             padding: '10px',
           }}
-          onClick={this.loadMenu}
+          onClick={this.props.onOpenMenu}
         >
           Menu
+        </div>
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '10px',
+            left: '10px',
+            backgroundColor: 'white',
+            padding: '10px',
+          }}
+          onClick={this.props.onHuntMonster}
+        >
+          Hunt!
         </div>
       </div>
     );
