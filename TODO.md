@@ -1,4 +1,3 @@
-
 ## Talk Structure
 
 ### Sections
@@ -12,7 +11,7 @@
 1. Gyms
 1. Shared world
 1. Offline
-1. Catching Pokemon revisited (VR)
+1. Catching Pokemon revisited (AR)
 1. PvP trainer battles
 
 ### Catching Pokemon
