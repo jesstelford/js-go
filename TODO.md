@@ -5,7 +5,7 @@ All numbers are hours
 ### Available
 
 Week 1
-- 2.0 - Sa 2016-11-12
+- ~2.0 - Sa 2016-11-12~
 - 4.0 - Su 2016-11-13
 
 Week 2
@@ -40,7 +40,7 @@ Week 4
 
 #### Code
 
-- 2 - Catching a monster state / screen
+- ~2~ 1 - Catching a monster state / screen
 - 1 - State management / transitions
 - 2 - Save to homescreen
 - 1 - Offline
