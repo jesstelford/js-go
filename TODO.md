@@ -1,29 +1,33 @@
 ## Time
 
+All numbers are hours
+
 ### Available
 
-```
-2.0 - Sa 2016-11-12
-4.0 - Su 2016-11-13
+Week 1
+- 2.0 - Sa 2016-11-12
+- 4.0 - Su 2016-11-13
 
-2.5 - Mo 2016-11-14
-1.0 - Tu 2016-11-15
-2.5 - We 2016-11-16
-2.5 - Th 2016-11-17
-2.5 - Fr 2016-11-18
-2.0 - Sa 2016-11-19
-0.0 - Su 2016-11-20
+Week 2
+- 2.5 - Mo 2016-11-14
+- 1.0 - Tu 2016-11-15
+- 2.5 - We 2016-11-16
+- 2.5 - Th 2016-11-17
+- 2.5 - Fr 2016-11-18
+- 2.0 - Sa 2016-11-19
+- 0.0 - Su 2016-11-20
 
-2.5 - Mo 2016-11-21
-1.0 - Tu 2016-11-22
-2.5 - We 2016-11-23
-2.5 - Th 2016-11-24
-2.5 - Fr 2016-11-25
-3.5 - Sa 2016-11-26
-1.5 - Su 2016-11-27
+Week 3
+- 2.5 - Mo 2016-11-21
+- 1.0 - Tu 2016-11-22
+- 2.5 - We 2016-11-23
+- 2.5 - Th 2016-11-24
+- 2.5 - Fr 2016-11-25
+- 3.5 - Sa 2016-11-26
+- 1.5 - Su 2016-11-27
 
-2.5 - Mo 2016-11-28
-```
+Week 4
+- 2.5 - Mo 2016-11-28
 
 **31.5 hr - Total**
 
@@ -31,44 +35,38 @@
 
 #### Presentation
 
-```
-10 - Slides prep
- 3 - Rehersal
-```
+- 10 - Slides prep
+- 3 - Rehersal
 
 #### Code
 
-```
- 2 - Catching a monster state / screen
- 1 - State management / transitions
- 2 - Save to homescreen
- 1 - Offline
- 1 - Pokestops - Believable number
- 1 - Pokestops - look-at squashed cylinder
- 2 - Node site
-   1 - Foursquare API requests
-   1 - Deployed to now.sh
- 2 - MongoDB with Foursquare cache in GeoJSON format
-   1 - Setup MongoDB
-   1 - Cache Foursquare data & search via Geospatial "near"
- 1 - Google Analytics
- 1 - Trace monitoring: https://trace.risingstack.com/
- 2 - Aspect ratio / AR positioning correction
- 4 - AR UX
-```
+- 2 - Catching a monster state / screen
+- 1 - State management / transitions
+- 2 - Save to homescreen
+- 1 - Offline
+- 1 - Pokestops - Believable number
+- 1 - Pokestops - look-at squashed cylinder
+- 2 - Node site
+  - 1 - Foursquare API requests
+  - 1 - Deployed to now.sh
+- 2 - MongoDB with Foursquare cache in GeoJSON format
+  - 1 - Setup MongoDB
+  - 1 - Cache Foursquare data & search via Geospatial "near"
+- 1 - Google Analytics
+- 1 - Trace monitoring: https://trace.risingstack.com/
+- 2 - Aspect ratio / AR positioning correction
+- 4 - AR UX
 
 **Optional**
 
-```
- 1 - Pokestops - Touchable / look-at
- 1 - Pokestops - State for new items
- 3 - Better looking 3D models
-   1 - Pokestops
-   1 - Main Character
-   1 - Monsters
- 1 - Offline -> Online Reconciliation
- 2 - BSP for caching / searching
-```
+- 1 - Pokestops - Touchable / look-at
+- 1 - Pokestops - State for new items
+- 3 - Better looking 3D models
+  - 1 - Pokestops
+  - 1 - Main Character
+  - 1 - Monsters
+- 1 - Offline -> Online Reconciliation
+- 2 - BSP for caching / searching
 
 ## Talk Structure
 
