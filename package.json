@@ -40,6 +40,7 @@
     "aframe-keyboard-controls": "^1.2.1",
     "aframe-map": "^2.0.3",
     "aframe-video-billboard": "0.0.1",
+    "asap": "^2.0.5",
     "deep-equal": "^1.0.1",
     "pascal-case": "^2.0.0",
     "react": "^15.3.2",

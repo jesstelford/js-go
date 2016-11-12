@@ -1,6 +1,7 @@
 import aframe from 'aframe';
 import React from 'react';
 import {domFromString} from '../lib/dom';
+import {default as ensureSceneLoaded} from '../lib/scenes';
 
 const setProperty = aframe.utils.entity.setComponentProperty;
 const venueCache = {};
@@ -79,7 +80,14 @@ const Map = React.createClass({
       });
   },
 
-  onSceneLoaded() {
+  onSceneLoaded(scene) {
+
+    if (!scene) {
+      return;
+    }
+
+    this._scene = scene;
+
     const currentLocationEl = this._scene.querySelector('#current-location');
     this._mapEl = this._scene.querySelector('a-map');
 
@@ -117,27 +125,6 @@ const Map = React.createClass({
 
   },
 
-  onRef(ref) {
-
-    if (!ref) {
-      return;
-    }
-
-    this._scene = ref.querySelector('a-scene');
-
-    // Wait until it's finished loading before trying anymore more
-    const run = _ => {
-      this._scene.removeEventListener('loaded', run);
-      this.onSceneLoaded();
-    };
-
-    if (!this._scene.hasLoaded) {
-      this._scene.addEventListener('loaded', run);
-    } else {
-      run();
-    }
-  },
-
   loadMenu() {
     // eslint-disable-next-line no-console
     console.log('load menu');
@@ -147,6 +134,10 @@ const Map = React.createClass({
     if (this._geoWatchId) {
       navigator.geolocation.clearWatch(this._geoWatchId);
     }
+
+    // Otherwise, pending rAF's still execute the `.tick()` function of
+    // components and systems
+    this._scene && this._scene.pause();
   },
 
   renderMonster() {
@@ -196,7 +187,11 @@ const Map = React.createClass({
   render() {
     return (
       <div>
-        <div ref={this.onRef} dangerouslySetInnerHTML={{__html: this.renderAframe()}} />
+
+        <div
+          ref={ensureSceneLoaded.bind(null, this.onSceneLoaded)}
+          dangerouslySetInnerHTML={{__html: this.renderAframe()}}
+        />
         <div
           style={{
             position: 'absolute',

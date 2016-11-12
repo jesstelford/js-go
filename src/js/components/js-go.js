@@ -26,6 +26,12 @@ const JSGo = React.createClass({
     });
   },
 
+  handleCaughtMonsterNext(/* monster */) {
+    this.setState({
+      gameState: 'map',
+    });
+  },
+
   handleCatchMonster(/* monster */) {
     // TODO: Flesh this out some more?
     this.setState({
@@ -61,6 +67,17 @@ const JSGo = React.createClass({
     return (
       <div>
         🎉 You caught the monster! 🎉
+        <button
+          style={{
+            position: 'absolute',
+            bottom: '10px',
+            left: '50%',
+            transform: 'translateX(-50%)'
+          }}
+          onClick={this.handleCaughtMonsterNext}
+        >
+          Done
+        </button>
       </div>
     );
   },
