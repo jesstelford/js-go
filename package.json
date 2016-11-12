@@ -1,14 +1,14 @@
 {
-  "name": "pokemon-go-js",
+  "name": "js-go",
   "version": "1.0.0",
-  "description": "",
+  "description": "Augmented Reality monster hunt & catch game based in the physical environment around you",
   "main": "index.js",
   "scripts": {
     "test": "npm run test:lint",
     "test:lint": "eslint ./src",
     "start": "sh -c 'cd lib && node server.js'",
     "watch": "npm run build && watchify --debug --verbose -t babelify -t [envify --NODE_ENV development ] src/js/index.js -o lib/js/index.js & npm run start",
-    "build": "mkdir -p lib/js && cp src/index.html lib/ && cp src/server.js lib/ && cp src/key.pem lib/ && cp src/cert.pem lib/ && cp -r src/css lib/"
+    "build": "mkdir -p lib/js && cp src/server.js lib/ && cp src/key.pem lib/ && cp src/cert.pem lib/ && cp -r src/css lib/ && node ./scripts/build.js"
   },
   "keywords": [],
   "author": "",
@@ -16,9 +16,11 @@
   "devDependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
     "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.5.0",
     "babelify": "^7.3.0",
     "browserify": "^13.1.0",
+    "cheerio": "^0.22.0",
     "envify": "^3.4.1",
     "eslint": "^3.2.2",
     "eslint-config-airbnb": "^10.0.0",
@@ -27,21 +29,27 @@
     "eslint-plugin-react": "^6.2.0",
     "rollupify": "^0.3.4",
     "uglifyify": "^3.0.2",
+    "upath": "^0.2.0",
     "watchify": "^3.7.0"
   },
   "dependencies": {
-    "aframe": "^0.3.1",
-    "aframe-click-drag-component": "^1.3.0",
-    "aframe-extras": "^2.5.3",
-    "aframe-frustum-lock-component": "^1.0.0",
+    "aframe": "^0.3.2",
+    "aframe-click-drag-component": "^2.0.0",
+    "aframe-extras": "^2.6.0",
+    "aframe-frustum-lock-component": "^1.0.1",
     "aframe-keyboard-controls": "^1.2.1",
+    "aframe-map": "^2.0.3",
     "aframe-video-billboard": "0.0.1",
     "deep-equal": "^1.0.1",
-    "webrtc-adapter": "^2.0.2"
+    "pascal-case": "^2.0.0",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "webrtc-adapter": "^2.0.5"
   },
   "babel": {
     "presets": [
       "es2015",
+      "react",
       "stage-0"
     ],
     "plugins": [

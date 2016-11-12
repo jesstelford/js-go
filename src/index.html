@@ -9,41 +9,6 @@
     <script src="js/index.js"></script>
   </head>
   <body>
-
-    <a-scene class="scene" physics>
-
-      <a-grid static-body position="0 0 0"></a-grid>
-
-      <a-sphere
-        id="monster-ball"
-        click-drag
-        dynamic-body="mass: 20"
-        position="0 1 -2"
-        radius="0.5"
-        color="#EF2D5E"
-      ></a-sphere>
-
-      <a-box
-        dynamic-body
-        position="0 3 -2"
-        width="0.5"
-        height="0.5"
-        depth="0.5"
-        color="#EF2D5E"
-      ></a-box>
-
-      <a-entity
-        camera="userHeight: 1.6"
-        keyboard-controls="mode: fps"
-        universal-controls="movementEnabled: false; rotationControls: hmd"
-        position="0 1.6 4"
-      >
-        <a-video-billboard
-          frustum-lock="widthProperty: video-billboard.minWidth; heightProperty: video-billboard.minHeight; depth: 10;"
-          position="0 0 0"
-        ></a-video-billboard>
-      </a-entity>
-
-    </a-scene>
+    <div id='catch-scene'></div>
   </body>
 </html>
