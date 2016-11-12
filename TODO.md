@@ -1,3 +1,75 @@
+## Time
+
+### Available
+
+```
+2.0 - Sa 2016-11-12
+4.0 - Su 2016-11-13
+
+2.5 - Mo 2016-11-14
+1.0 - Tu 2016-11-15
+2.5 - We 2016-11-16
+2.5 - Th 2016-11-17
+2.5 - Fr 2016-11-18
+2.0 - Sa 2016-11-19
+0.0 - Su 2016-11-20
+
+2.5 - Mo 2016-11-21
+1.0 - Tu 2016-11-22
+2.5 - We 2016-11-23
+2.5 - Th 2016-11-24
+2.5 - Fr 2016-11-25
+3.5 - Sa 2016-11-26
+1.5 - Su 2016-11-27
+
+2.5 - Mo 2016-11-28
+```
+
+**31.5 hr - Total**
+
+### Usage
+
+#### Presentation
+
+```
+10 - Slides prep
+ 3 - Rehersal
+```
+
+#### Code
+
+```
+ 2 - Catching a monster state / screen
+ 1 - State management / transitions
+ 2 - Save to homescreen
+ 1 - Offline
+ 1 - Pokestops - Believable number
+ 1 - Pokestops - look-at squashed cylinder
+ 2 - Node site
+   1 - Foursquare API requests
+   1 - Deployed to now.sh
+ 2 - MongoDB with Foursquare cache in GeoJSON format
+   1 - Setup MongoDB
+   1 - Cache Foursquare data & search via Geospatial "near"
+ 1 - Google Analytics
+ 1 - Trace monitoring: https://trace.risingstack.com/
+ 2 - Aspect ratio / AR positioning correction
+ 4 - AR UX
+```
+
+**Optional**
+
+```
+ 1 - Pokestops - Touchable / look-at
+ 1 - Pokestops - State for new items
+ 3 - Better looking 3D models
+   1 - Pokestops
+   1 - Main Character
+   1 - Monsters
+ 1 - Offline -> Online Reconciliation
+ 2 - BSP for caching / searching
+```
+
 ## Talk Structure
 
 ### Sections
@@ -33,7 +105,8 @@
 
 ### Pokestops
 
-* Public locations data (Foursquare? Google Locations? Yahoo Locations?)
+* Public locations data from Foursquare
+* Store it all locally
 
 ### Gyms
 
@@ -43,12 +116,14 @@
 ### Shared world
 
 * Node.js
-* MongoDB(?)
+* MongoDB - with GeoSpatial indexes: https://docs.mongodb.com/v3.2/applications/geospatial-indexes/
 * Scalable servers (now.sh)
+* Store Pokestops & Gyms in the cloud
 
 ### Offline
 
 * Service Workers
+* Reconciliation
 
 ### Catching Pokemon revisited (VR)
 
@@ -62,12 +137,14 @@
 * WebRTC (is hard)
 * WebTorrent (is easier)
 
+## The Talk
+
+- Use Vysor App to mirror the phone's screen on my laptop.
+  Be sure to enable fullscreen mode, and hide the Vysor Toolbars
+
 ## Code
 
-- Use `aframe-react` to handle scene.
-  - Use it to enable / disable the `<a-scene>`
-  - Structure code to support multiple different scenes
-  - Start on map scene
+- Structure code to support multiple different scenes
 
 ### Map
 
