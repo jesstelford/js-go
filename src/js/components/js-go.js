@@ -1,8 +1,8 @@
 import React from 'react';
 import pascalCase from 'pascal-case';
 
-import CatchScene from '../scenes/catch';
-import MapScene from '../scenes/map';
+import CatchScene from './scenes/catch';
+import MapScene from './scenes/map';
 
 const JSGo = React.createClass({
 

@@ -1,7 +1,7 @@
 import aframe from 'aframe';
 import React from 'react';
-import {domFromString} from '../lib/dom';
-import {default as ensureSceneLoaded} from '../lib/scenes';
+import {domFromString} from '../../lib/dom';
+import {default as ensureSceneLoaded} from '../../lib/scenes';
 
 const setProperty = aframe.utils.entity.setComponentProperty;
 const venueCache = {};
