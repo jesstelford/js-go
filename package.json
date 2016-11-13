@@ -48,6 +48,7 @@
     "pascal-case": "^2.0.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
+    "react-motion": "^0.4.5",
     "styled-components": "^1.0.10",
     "webrtc-adapter": "^2.0.5"
   },
@@ -62,7 +63,9 @@
     ]
   },
   "stylelint": {
-    "processors": ["stylelint-processor-styled-components"],
+    "processors": [
+      "stylelint-processor-styled-components"
+    ],
     "extends": "stylelint-config-standard",
     "syntax": "scss"
   }

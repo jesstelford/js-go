@@ -31,8 +31,12 @@ injectGlobalStyle`
   *, *:before, *:after {
     box-sizing: inherit;
   }
-  html, body, #js-go {
-    min-height: 100%;
+  html, body {
+    height: 100%;
+    height: 100%;
+  }
+  #js-go {
+    height: 100%;
   }
 `;
 
