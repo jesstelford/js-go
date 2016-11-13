@@ -12,7 +12,11 @@ const options = {
 
 // From https://developer.mozilla.org/en-US/docs/Node_server_without_framework
 https.createServer(options, (request, response) => {
-  console.log('request ', request.url);
+
+  if (process.env.NODE_ENV !== 'production') {
+    // eslint-disable-next-line no-console
+    console.log('request ', request.url);
+  }
 
   let filePath = `.${url.parse(request.url).pathname}`;
   if (filePath === './') {
@@ -64,4 +68,7 @@ https.createServer(options, (request, response) => {
 
 }).listen(8080);
 
-console.log('listening on port 8080');
+if (process.env.NODE_ENV !== 'production') {
+  // eslint-disable-next-line no-console
+  console.log('listening on port 8080');
+}

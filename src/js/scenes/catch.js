@@ -11,7 +11,7 @@ const Catch = React.createClass({
     onCatchMonster: React.PropTypes.func.isRequired,
   },
 
-  onMonsterBallCollision({detail: {contact, body: {el: collidedWith}}}) {
+  onMonsterBallCollision({detail: {body: {el: collidedWith}}}) {
     if (collidedWith === this._monsterEl) {
       // Note: We're inside the phsyics collision handler now.
       // If we were to signal that the monster was caught now, it would remove
@@ -106,10 +106,6 @@ const Catch = React.createClass({
 
   },
 
-  getOutOfDodge() {
-    console.log('run away!');
-  },
-
   componentWillUnmount() {
     // Tear down
   },
@@ -142,6 +138,7 @@ const Catch = React.createClass({
 
   renderAframe() {
 
+    /* eslint-disable max-len */
     return `
       <a-scene debug class="scene" physics>
 
@@ -176,13 +173,14 @@ const Catch = React.createClass({
 
       </a-scene>
     `.trim();
+    /* eslint-enable max-len */
   },
 
   render() {
     return (
       <div>
         <div
-          ref={ensureSceneLoaded.bind(null, this.onSceneLoaded)}
+          ref={ref => ensureSceneLoaded(this.onSceneLoaded, ref)}
           dangerouslySetInnerHTML={{__html: this.renderAframe()}}
         />
         <div

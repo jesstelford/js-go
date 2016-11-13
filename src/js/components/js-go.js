@@ -72,7 +72,7 @@ const JSGo = React.createClass({
             position: 'absolute',
             bottom: '10px',
             left: '50%',
-            transform: 'translateX(-50%)'
+            transform: 'translateX(-50%)',
           }}
           onClick={this.handleCaughtMonsterNext}
         >

@@ -119,6 +119,7 @@ const Map = React.createClass({
         this.onLocationUpdate(lat, long, geomData.width, geomData.height);
 
       }, error => {
+        // eslint-disable-next-line no-console
         console.error(error);
       }, options);
     });
@@ -137,7 +138,9 @@ const Map = React.createClass({
 
     // Otherwise, pending rAF's still execute the `.tick()` function of
     // components and systems
-    this._scene && this._scene.pause();
+    if (this._scene) {
+      this._scene.pause();
+    }
   },
 
   renderMonster() {
@@ -189,7 +192,7 @@ const Map = React.createClass({
       <div>
 
         <div
-          ref={ensureSceneLoaded.bind(null, this.onSceneLoaded)}
+          ref={ref => ensureSceneLoaded(this.onSceneLoaded, ref)}
           dangerouslySetInnerHTML={{__html: this.renderAframe()}}
         />
         <div
