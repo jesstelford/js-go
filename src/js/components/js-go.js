@@ -1,8 +1,15 @@
 import React from 'react';
+import styled from 'styled-components';
 import pascalCase from 'pascal-case';
 
-import CatchScene from '../scenes/catch';
-import MapScene from '../scenes/map';
+import CatchScene from './scenes/catch';
+import MapScene from './scenes/map';
+import Caught from './caught';
+
+const Container = styled.section`
+  height: 100%;
+  overflow: auto; /* prevent child margins from breaking out */
+`;
 
 const JSGo = React.createClass({
 
@@ -21,6 +28,12 @@ const JSGo = React.createClass({
 
   handleRunFromMonster(/* monster */) {
     // TODO: Flesh this out some more?
+    this.setState({
+      gameState: 'map',
+    });
+  },
+
+  handleCaughtMonsterNext(/* monster */) {
     this.setState({
       gameState: 'map',
     });
@@ -59,9 +72,19 @@ const JSGo = React.createClass({
 
   renderCaughtMonsterState() {
     return (
-      <div>
-        🎉 You caught the monster! 🎉
-      </div>
+      <Caught
+        onDone={this.handleCaughtMonsterNext}
+        name="The Thing"
+        type={{
+          colour: 'green',
+          name: 'Gelatinous',
+        }}
+        stats={{
+          hp: 100,
+          attack: 42,
+          defence: 35,
+        }}
+      />
     );
   },
 
@@ -76,7 +99,7 @@ const JSGo = React.createClass({
   render() {
     const stateRenderer = this[`render${pascalCase(this.state.gameState)}State`];
     return (
-      <div>{stateRenderer()}</div>
+      <Container>{stateRenderer()}</Container>
     );
   },
 });

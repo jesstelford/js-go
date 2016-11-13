@@ -1,6 +1,7 @@
 import aframe from 'aframe';
 import React from 'react';
-import {domFromString} from '../lib/dom';
+import {domFromString} from '../../lib/dom';
+import {default as ensureSceneLoaded} from '../../lib/scenes';
 
 const setProperty = aframe.utils.entity.setComponentProperty;
 const venueCache = {};
@@ -79,7 +80,14 @@ const Map = React.createClass({
       });
   },
 
-  onSceneLoaded() {
+  onSceneLoaded(scene) {
+
+    if (!scene) {
+      return;
+    }
+
+    this._scene = scene;
+
     const currentLocationEl = this._scene.querySelector('#current-location');
     this._mapEl = this._scene.querySelector('a-map');
 
@@ -111,31 +119,11 @@ const Map = React.createClass({
         this.onLocationUpdate(lat, long, geomData.width, geomData.height);
 
       }, error => {
+        // eslint-disable-next-line no-console
         console.error(error);
       }, options);
     });
 
-  },
-
-  onRef(ref) {
-
-    if (!ref) {
-      return;
-    }
-
-    this._scene = ref.querySelector('a-scene');
-
-    // Wait until it's finished loading before trying anymore more
-    const run = _ => {
-      this._scene.removeEventListener('loaded', run);
-      this.onSceneLoaded();
-    };
-
-    if (!this._scene.hasLoaded) {
-      this._scene.addEventListener('loaded', run);
-    } else {
-      run();
-    }
   },
 
   loadMenu() {
@@ -146,6 +134,12 @@ const Map = React.createClass({
   componentWillUnmount() {
     if (this._geoWatchId) {
       navigator.geolocation.clearWatch(this._geoWatchId);
+    }
+
+    // Otherwise, pending rAF's still execute the `.tick()` function of
+    // components and systems
+    if (this._scene) {
+      this._scene.pause();
     }
   },
 
@@ -196,7 +190,11 @@ const Map = React.createClass({
   render() {
     return (
       <div>
-        <div ref={this.onRef} dangerouslySetInnerHTML={{__html: this.renderAframe()}} />
+
+        <div
+          ref={ref => ensureSceneLoaded(this.onSceneLoaded, ref)}
+          dangerouslySetInnerHTML={{__html: this.renderAframe()}}
+        />
         <div
           style={{
             position: 'absolute',

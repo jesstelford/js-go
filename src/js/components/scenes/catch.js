@@ -1,12 +1,32 @@
 import aframe from 'aframe';
 import React from 'react';
-import {domFromString} from '../lib/dom';
+import asap from 'asap';
+import {domFromString} from '../../lib/dom';
+import {default as ensureSceneLoaded} from '../../lib/scenes';
 
 const Catch = React.createClass({
 
   propTypes: {
     onGetOutOfDodge: React.PropTypes.func.isRequired,
     onCatchMonster: React.PropTypes.func.isRequired,
+  },
+
+  onMonsterBallCollision({detail: {body: {el: collidedWith}}}) {
+    if (collidedWith === this._monsterEl) {
+      // Note: We're inside the phsyics collision handler now.
+      // If we were to signal that the monster was caught now, it would remove
+      // the bodies from the world while it is still processing, resulting in
+      // weird behaviour.
+      // Instead, we do it as soon as possible after the current task has
+      // finished executing.
+      // We can't even `.pause()`, because that removes the body too
+      asap(this.props.onCatchMonster);
+      return;
+    }
+  },
+
+  monsterBallLoaded() {
+    this._monsterBallEl.addEventListener('collide', this.onMonsterBallCollision);
   },
 
   onDragend({detail: {velocity}}) {
@@ -28,6 +48,8 @@ const Catch = React.createClass({
     const run = _ => {
 
       this._monsterBallEl.removeEventListener('loaded', run);
+
+      this.monsterBallLoaded();
 
       // We're dealing with a very heavy ball (mass: 100), so we want to
       // reduce the velocity a little
@@ -67,20 +89,21 @@ const Catch = React.createClass({
 
   },
 
-  onRef(ref) {
+  onSceneLoaded(scene) {
 
-    if (!ref) {
+    if (!scene) {
       return;
     }
 
-    this._scene = ref.querySelector('a-scene');
+    this._scene = scene;
 
-    this._monsterBallEl = ref.querySelector('#monster-ball');
+    this._monsterBallEl = scene.querySelector('#monster-ball');
+    this._monsterEl = scene.querySelector('#monster');
+
     this._monsterBallEl.addEventListener('dragend', this.onDragend);
-  },
 
-  getOutOfDodge() {
-    console.log('run away!');
+    this.monsterBallLoaded();
+
   },
 
   componentWillUnmount() {
@@ -102,6 +125,7 @@ const Catch = React.createClass({
   renderMonster() {
     return `
       <a-box
+        id="monster"
         static-body
         position="0 0.5 -2"
         width="0.5"
@@ -114,6 +138,7 @@ const Catch = React.createClass({
 
   renderAframe() {
 
+    /* eslint-disable max-len */
     return `
       <a-scene debug class="scene" physics>
 
@@ -148,12 +173,16 @@ const Catch = React.createClass({
 
       </a-scene>
     `.trim();
+    /* eslint-enable max-len */
   },
 
   render() {
     return (
       <div>
-        <div ref={this.onRef} dangerouslySetInnerHTML={{__html: this.renderAframe()}} />
+        <div
+          ref={ref => ensureSceneLoaded(this.onSceneLoaded, ref)}
+          dangerouslySetInnerHTML={{__html: this.renderAframe()}}
+        />
         <div
           style={{
             position: 'absolute',
@@ -165,18 +194,6 @@ const Catch = React.createClass({
           onClick={this.props.onGetOutOfDodge}
         >
           Run
-        </div>
-        <div
-          style={{
-            position: 'absolute',
-            top: '10px',
-            left: '10px',
-            backgroundColor: 'white',
-            padding: '10px',
-          }}
-          onClick={this.props.onCatchMonster}
-        >
-          Catch it!
         </div>
       </div>
     );
