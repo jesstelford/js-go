@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run test:lint",
-    "test:lint": "eslint ./src",
+    "test:lint": "eslint ./src && stylelint './src/**/*.js'",
     "start": "sh -c 'cd lib && node server.js'",
     "watch": "npm run build && watchify --debug --verbose -t babelify -t [envify --NODE_ENV development ] src/js/index.js -o lib/js/index.js & npm run start",
     "build": "mkdir -p lib/js && cp src/server.js lib/ && cp src/key.pem lib/ && cp src/cert.pem lib/ && cp -r src/css lib/ && node ./scripts/build.js"
@@ -28,6 +28,9 @@
     "eslint-plugin-jsx-a11y": "^2.0.1",
     "eslint-plugin-react": "^6.2.0",
     "rollupify": "^0.3.4",
+    "stylelint": "^7.5.0",
+    "stylelint-config-standard": "^14.0.0",
+    "stylelint-processor-styled-components": "0.0.4",
     "uglifyify": "^3.0.2",
     "upath": "^0.2.0",
     "watchify": "^3.7.0"
@@ -45,6 +48,7 @@
     "pascal-case": "^2.0.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
+    "styled-components": "^1.0.10",
     "webrtc-adapter": "^2.0.5"
   },
   "babel": {
@@ -56,5 +60,10 @@
     "plugins": [
       "transform-object-rest-spread"
     ]
+  },
+  "stylelint": {
+    "processors": ["stylelint-processor-styled-components"],
+    "extends": "stylelint-config-standard",
+    "syntax": "scss"
   }
 }
