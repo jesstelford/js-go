@@ -3,6 +3,7 @@ import pascalCase from 'pascal-case';
 
 import CatchScene from './scenes/catch';
 import MapScene from './scenes/map';
+import Caught from './caught';
 
 const JSGo = React.createClass({
 
@@ -65,21 +66,8 @@ const JSGo = React.createClass({
 
   renderCaughtMonsterState() {
     return (
-      <div>
-        🎉 You caught the monster! 🎉
-        <button
-          style={{
-            position: 'absolute',
-            bottom: '10px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-          }}
-          onClick={this.handleCaughtMonsterNext}
-        >
-          Done
-        </button>
-      </div>
-    );
+      <Caught goNext={this.handleCaughtMonsterNext} />
+    )
   },
 
   renderMenuState() {
