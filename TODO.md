@@ -9,7 +9,7 @@ Week 1
 - ~~4.0 - Su 2016-11-13~~
 
 Week 2
-- 2.5 - Mo 2016-11-14
+- ~~2.5 - Mo 2016-11-14~~
 - 1.0 - Tu 2016-11-15
 - 2.5 - We 2016-11-16
 - 2.5 - Th 2016-11-17
@@ -41,7 +41,7 @@ Week 4
 #### Code
 
 - ~~2 - Catching a monster state / screen~~
-- 1 - State management / transitions
+- ~~1 - State management / transitions~~
 - 2 - Save to homescreen
 - 1 - Offline
 - 1 - Pokestops - Believable number
