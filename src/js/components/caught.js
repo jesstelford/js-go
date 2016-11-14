@@ -104,6 +104,8 @@ const Caught = React.createClass({
       name: React.PropTypes.string.isRequired,
       colour: React.PropTypes.string,
     }).isRequired,
+    transitionOut: React.PropTypes.func,
+    transitionIn: React.PropTypes.func,
   },
 
   render() {
@@ -148,9 +150,14 @@ const Caught = React.createClass({
 
           })}
         >
-          {nextStyles => (
+          {nextStyles => {
+            return (
 
-            <InfoOverlay logo={<LogoAnimation>🎉</LogoAnimation>}>
+            <InfoOverlay
+              logo={<LogoAnimation>🎉</LogoAnimation>}
+              transitionIn={this.props.transitionIn}
+              transitionOut={this.props.transitionOut}
+            >
               <TopRow>
                 <InfoLine opacity={nextStyles[0].opacity}>
                   You caught <MonsterName>{this.props.name}</MonsterName>
@@ -171,7 +178,7 @@ const Caught = React.createClass({
               </div>
             </InfoOverlay>
 
-          )}
+          )}}
         </StaggeredMotion>
 
       </ThemeProvider>

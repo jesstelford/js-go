@@ -1,11 +1,22 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
+import {addPrefixedEventListener} from '../lib/dom';
 
 const shadowRadius = 10;
 const boxShadow = `0px 0px ${shadowRadius}px 0px rgba(0,0,0,0.5)`;
 
 const logoRadius = 45;
 const logoDiameter = logoRadius * 2;
+
+const transitionInAnimation = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`;
+
+const transitionOutAnimation = keyframes`
+  from { opacity: 1; }
+  to { opacity: 0; }
+`;
 
 const Container = styled.div`
   min-height: 100%;
@@ -14,6 +25,8 @@ const Container = styled.div`
   text-align: center;
   font-size: 1.5em;
   background-color: papayawhip;
+  ${props => (props.transitionIn ? `animation: ${transitionInAnimation} 1s ease-out` : '')}
+  ${props => (props.transitionOut ? `animation: ${transitionOutAnimation} 1s ease-out` : '')}
 `;
 
 const InnerContainer = styled.section`
@@ -59,6 +72,8 @@ const InfoOverlay = React.createClass({
   propTypes: {
     children: React.PropTypes.node.isRequired,
     logo: React.PropTypes.node,
+    transitionIn: React.PropTypes.func,
+    transitionOut: React.PropTypes.func,
   },
 
   getDefaultProps() {
@@ -67,9 +82,28 @@ const InfoOverlay = React.createClass({
     };
   },
 
+  onRef(ref) {
+    if (!ref) {
+      return;
+    }
+
+    addPrefixedEventListener(ref, 'animationend', ({animationName}) => {
+      if (animationName === transitionInAnimation) {
+        this.props.transitionIn();
+      } else if (animationName === transitionOutAnimation) {
+        this.props.transitionOut();
+      }
+    });
+
+  },
+
   render() {
     return (
-      <Container>
+      <Container
+        transitionIn={this.props.transitionIn}
+        transitionOut={this.props.transitionOut}
+        innerRef={this.onRef}
+      >
         <InnerContainer>
           <Logo>{this.props.logo}</Logo>
           {this.props.children}

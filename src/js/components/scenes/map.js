@@ -1,16 +1,46 @@
 import aframe from 'aframe';
 import React from 'react';
-import {domFromString} from '../../lib/dom';
-import {default as ensureSceneLoaded} from '../../lib/scenes';
+import styled, {keyframes} from 'styled-components';
+import {addPrefixedEventListener, domFromString} from '../../lib/dom';
+import AframeContainer from '../aframe-container';
 
 const setProperty = aframe.utils.entity.setComponentProperty;
 const venueCache = {};
+
+const transitionInAnimation = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`;
+
+const transitionOutAnimation = keyframes`
+  from { opacity: 1; }
+  to { opacity: 0; }
+`;
+
+function getTransitionInStyle(props) {
+  if (!props.transitionIn) {
+    return '';
+  }
+  return props.hasLoaded ? `animation: ${transitionInAnimation} 1s ease-out` : 'opacity: 0';
+}
+
+function getTransitionOutStyle(props) {
+  return props.transitionOut ? `animation: ${transitionOutAnimation} 1s ease-out` : '';
+}
+
+const Container = styled.section`
+  ${getTransitionInStyle}
+  ${getTransitionOutStyle}
+`;
+
 
 const Map = React.createClass({
 
   propTypes: {
     onHuntMonster: React.PropTypes.func.isRequired,
     onOpenMenu: React.PropTypes.func.isRequired,
+    transitionIn: React.PropTypes.func,
+    transitionOut: React.PropTypes.func,
   },
 
   // Creating an inverted cone and adding it to the scene as a place marker
@@ -82,7 +112,7 @@ const Map = React.createClass({
 
   onSceneLoaded(scene) {
 
-    if (!scene) {
+    if (!scene || (scene && this.state.hasLoaded)) {
       return;
     }
 
@@ -122,13 +152,20 @@ const Map = React.createClass({
         // eslint-disable-next-line no-console
         console.error(error);
       }, options);
+
+      // Purposely don't do this inside the location callback as the scene has
+      // still "loaded", we're just waiting on more accurate location data.
+      if (!this.state.hasLoaded) {
+        this.setState({hasLoaded: true});
+      }
     });
 
   },
 
-  loadMenu() {
-    // eslint-disable-next-line no-console
-    console.log('load menu');
+  getInitialState() {
+    return {
+      hasLoaded: false,
+    };
   },
 
   componentWillUnmount() {
@@ -187,13 +224,34 @@ const Map = React.createClass({
     `.trim();
   },
 
+  onRef(ref) {
+    if (!ref) {
+      return;
+    }
+
+    // transition animation callbacks
+    addPrefixedEventListener(ref, 'animationend', ({animationName}) => {
+      if (animationName === transitionInAnimation) {
+        this.props.transitionIn();
+      } else if (animationName === transitionOutAnimation) {
+        this.props.transitionOut();
+      }
+    });
+
+  },
+
   render() {
     return (
-      <div>
+      <Container
+        transitionIn={this.props.transitionIn}
+        transitionOut={this.props.transitionOut}
+        hasLoaded={this.state.hasLoaded}
+        innerRef={this.onRef}
+      >
 
-        <div
-          ref={ref => ensureSceneLoaded(this.onSceneLoaded, ref)}
-          dangerouslySetInnerHTML={{__html: this.renderAframe()}}
+        <AframeContainer
+          onSceneLoaded={this.onSceneLoaded}
+          renderAframe={this.renderAframe}
         />
         <div
           style={{
@@ -219,7 +277,7 @@ const Map = React.createClass({
         >
           Hunt!
         </div>
-      </div>
+      </Container>
     );
   },
 });

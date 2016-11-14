@@ -15,7 +15,7 @@ const JSGo = React.createClass({
 
   getInitialState() {
     return {
-      gameState: 'map',
+      gameState: 'catch',
     };
   },
 
@@ -52,11 +52,39 @@ const JSGo = React.createClass({
     });
   },
 
+  triggerTransition(onTransitionEnd) {
+
+    const transitionedIn = _ => {
+      this.setState({
+        transitioningOut: false,
+        transitioningIn: false,
+      });
+    };
+
+    const transitionedOut = _ => {
+      onTransitionEnd();
+
+      this.setState({
+        transitioningOut: false,
+        transitioningIn: true,
+        onTransitionEnd: transitionedIn,
+      });
+    };
+
+    this.setState({
+      transitioningOut: true,
+      onTransitionEnd: transitionedOut,
+    });
+
+  },
+
   renderMapState() {
     return (
       <MapScene
-        onHuntMonster={this.handleHuntMonster}
-        onOpenMenu={this.handleOpenMenu}
+        onOpenMenu={_ => this.triggerTransition(this.handleOpenMenu)}
+        onHuntMonster={_ => this.triggerTransition(this.handleHuntMonster)}
+        transitionOut={this.state.transitioningOut && this.state.onTransitionEnd}
+        transitionIn={this.state.transitioningIn && this.state.onTransitionEnd}
       />
     );
   },
@@ -64,8 +92,10 @@ const JSGo = React.createClass({
   renderCatchState() {
     return (
       <CatchScene
-        onGetOutOfDodge={this.handleRunFromMonster}
-        onCatchMonster={this.handleCatchMonster}
+        onGetOutOfDodge={_ => this.triggerTransition(this.handleRunFromMonster)}
+        onCatchMonster={_ => this.triggerTransition(this.handleCatchMonster)}
+        transitionOut={this.state.transitioningOut && this.state.onTransitionEnd}
+        transitionIn={this.state.transitioningIn && this.state.onTransitionEnd}
       />
     );
   },
@@ -73,7 +103,9 @@ const JSGo = React.createClass({
   renderCaughtMonsterState() {
     return (
       <Caught
-        onDone={this.handleCaughtMonsterNext}
+        onDone={_ => this.triggerTransition(this.handleCaughtMonsterNext)}
+        transitionOut={this.state.transitioningOut && this.state.onTransitionEnd}
+        transitionIn={this.state.transitioningIn && this.state.onTransitionEnd}
         name="The Thing"
         type={{
           colour: 'green',
