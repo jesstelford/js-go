@@ -1,7 +1,7 @@
-import aframe from 'aframe';
 import React from 'react';
 import asap from 'asap';
 import styled, {keyframes} from 'styled-components';
+import aframe from '../../lib/aframe';
 import {addPrefixedEventListener, domFromString} from '../../lib/dom';
 import AframeContainer from '../aframe-container';
 

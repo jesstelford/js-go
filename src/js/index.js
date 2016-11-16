@@ -1,4 +1,3 @@
-import aframe from 'aframe';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import aframeExtras from 'aframe-extras';
@@ -8,6 +7,8 @@ import registerVideoBillboard from 'aframe-video-billboard';
 import aframeKeyboardControls from 'aframe-keyboard-controls';
 import registerMap from 'aframe-map';
 import {injectGlobal as injectGlobalStyle} from 'styled-components';
+
+import aframe from './lib/aframe';
 
 import JSGo from './components/js-go';
 
