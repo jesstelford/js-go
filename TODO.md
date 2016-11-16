@@ -10,8 +10,8 @@ Week 1
 
 Week 2
 - ~~2.5 - Mo 2016-11-14~~
-- 1.0 - Tu 2016-11-15
-- 2.5 - We 2016-11-16
+- ~~1.0 - Tu 2016-11-15~~
+- ~~2.5 - We 2016-11-16~~
 - 2.5 - Th 2016-11-17
 - 2.5 - Fr 2016-11-18
 - 2.0 - Sa 2016-11-19
@@ -42,7 +42,7 @@ Week 4
 
 - ~~2 - Catching a monster state / screen~~
 - ~~1 - State management / transitions~~
-- 2 - Save to homescreen
+- ~~2~~ 1 - Save to homescreen
 - 1 - Offline
 - 1 - Pokestops - Believable number
 - 1 - Pokestops - look-at squashed cylinder
