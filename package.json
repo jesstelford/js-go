@@ -36,7 +36,7 @@
     "watchify": "^3.7.0"
   },
   "dependencies": {
-    "aframe": "^0.3.2",
+    "aframe": "github:aframevr/aframe#cc824c6",
     "aframe-click-drag-component": "^2.0.0",
     "aframe-extras": "^2.6.0",
     "aframe-frustum-lock-component": "^1.0.1",
