@@ -7,8 +7,11 @@
     "test": "npm run test:lint",
     "test:lint": "eslint ./src && stylelint './src/components/**/*.js'",
     "start": "sh -c 'cd lib && node server.js'",
-    "watch": "npm run build && watchify --debug --verbose -g [envify --NODE_ENV development ] -t babelify src/js/index.js -o lib/js/index.js & npm run start",
-    "build": "mkdir -p lib/js && cp src/server.js lib/ && cp src/key.pem lib/ && cp src/cert.pem lib/ && cp -r src/css lib/ && node ./scripts/build.js"
+    "watch": "npm run build:dev && watchify --debug --verbose -g [envify --NODE_ENV development ] -t babelify src/js/index.js -o lib/js/index.js & npm run start",
+    "build:prepare": "mkdir -p lib/js && cp src/server.js lib/ && cp src/key.pem lib/ && cp src/cert.pem lib/ && cp -r src/css lib/",
+    "build:dev": "npm run build:prepare && NODE_ENV=development node ./scripts/build.js",
+    "build:prod": "npm run build:prepare && NODE_ENV=production node ./scripts/build.js",
+    "launch": "google-chrome --user-data-dir=/tmp/foo --ignore-certificate-errors --unsafely-treat-insecure-origin-as-secure=https://localhost"
   },
   "keywords": [],
   "author": "",
@@ -27,10 +30,12 @@
     "eslint-plugin-import": "^1.12.0",
     "eslint-plugin-jsx-a11y": "^2.0.1",
     "eslint-plugin-react": "^6.2.0",
+    "find-root": "^1.0.0",
     "rollupify": "^0.3.4",
     "stylelint": "^7.5.0",
     "stylelint-config-standard": "^14.0.0",
     "stylelint-processor-styled-components": "0.0.4",
+    "sw-precache": "^4.2.1",
     "uglifyify": "^3.0.2",
     "upath": "^0.2.0",
     "watchify": "^3.7.0"

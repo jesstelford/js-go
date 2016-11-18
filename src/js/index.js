@@ -1,3 +1,5 @@
+import './service-worker-registration';
+
 import aframe from 'aframe';
 import React from 'react';
 import ReactDOM from 'react-dom';

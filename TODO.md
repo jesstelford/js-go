@@ -122,6 +122,9 @@ Week 4
 
 * Service Workers
 * Reconciliation
+* Get started with PWAs: https://addyosmani.com/blog/getting-started-with-progressive-web-apps/
+  * Manifest generator: https://brucelawson.github.io/manifest/
+  * favicon generator: http://realfavicongenerator.net/
 
 ### Catching Pokemon revisited (VR)
 
