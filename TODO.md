@@ -69,6 +69,8 @@ Week 4
 - ~~1 - Offline~~
 - 1 - Pokestops - Believable number
 - 1 - Pokestops - look-at squashed cylinder
+- 2 - Pokemon - Actually show them on the map / touchable
+- 2 - Aspect ratio / AR positioning correction
 - 2 - Node site
   - 1 - Foursquare API requests
   - 1 - Deployed to now.sh
@@ -77,7 +79,6 @@ Week 4
   - 1 - Cache Foursquare data & search via Geospatial "near"
 - 1 - Google Analytics
 - 1 - Trace monitoring: https://trace.risingstack.com/
-- 2 - Aspect ratio / AR positioning correction
 - 4 - AR UX
 
 **Optional**
