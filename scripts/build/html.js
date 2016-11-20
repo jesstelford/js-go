@@ -20,6 +20,7 @@ module.exports = function injectJSCacheBust() {
       const $ = cheerio.load(indexHtml.toString());
 
       $('script[src="js/index.js"]').attr('src', `js/index.js?v${+new Date()}`);
+      $('script[src="js/service-worker-registration.js"]').attr('src', `js/service-worker-registration.js?v${+new Date()}`);
 
       writeFile(upath.join(process.cwd(), outDir, 'index.html'), $.html(), writeError => {
         if (writeError) {
