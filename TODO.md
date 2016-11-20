@@ -1,3 +1,26 @@
+## Code
+
+- Add "scope" to the manifest to avoid accidentally landing on splash pages,
+  etc. https://developer.mozilla.org/en-US/docs/Web/Manifest#scope
+- Open graph / twitter meta: 
+```
+            <meta property=og:title content="Air Horn">
+            <meta property=og:type content=website>
+            <meta property=og:image content=https://airhorner.com/images/touch/Airhorner_192.png>
+            <meta property=og:url content="https://airhorner.com/">
+            <meta property=og:description content="The best and easiest Air Horn web app there is. No install just use it right away in your browser!">
+            <meta name=twitter:card content=summary>
+            <meta name=twitter:url content="https://airhorner.com/">
+            <meta name=twitter:title content="Air Horn">
+            <meta name=twitter:description content="The best and easiest Air Horn web app there is. No install just use it right away in your browser!">
+            <meta name=twitter:image content=https://airhorner.com/images/touch/Airhorner_192.png>
+            <meta name=twitter:creator content=@paul_kinlan>
+```
+
+### Map
+
+- Local Tile Server with [`tileserver-gl-light` from the TileServer GL project](https://github.com/klokantech/tileserver-gl)
+
 ## Time
 
 All numbers are hours
@@ -12,10 +35,10 @@ Week 2
 - ~~2.5 - Mo 2016-11-14~~
 - ~~1.0 - Tu 2016-11-15~~
 - ~~2.5 - We 2016-11-16~~
-- 2.5 - Th 2016-11-17
-- 2.5 - Fr 2016-11-18
-- 2.0 - Sa 2016-11-19
-- 0.0 - Su 2016-11-20
+- ~~2.5 - Th 2016-11-17~~
+- ~~2.5 - Fr 2016-11-18~~
+- ~~2.0 - Sa 2016-11-19~~
+- ~~0.0 - Su 2016-11-20~~
 
 Week 3
 - 2.5 - Mo 2016-11-21
@@ -42,8 +65,8 @@ Week 4
 
 - ~~2 - Catching a monster state / screen~~
 - ~~1 - State management / transitions~~
-- ~~2~~ 1 - Save to homescreen
-- 1 - Offline
+- ~~2 - Save to homescreen~~
+- ~~1 - Offline~~
 - 1 - Pokestops - Believable number
 - 1 - Pokestops - look-at squashed cylinder
 - 2 - Node site
@@ -142,11 +165,3 @@ Week 4
 
 - Use Vysor App to mirror the phone's screen on my laptop.
   Be sure to enable fullscreen mode, and hide the Vysor Toolbars
-
-## Code
-
-- Structure code to support multiple different scenes
-
-### Map
-
-- Local Tile Server with [`tileserver-gl-light` from the TileServer GL project](https://github.com/klokantech/tileserver-gl)
