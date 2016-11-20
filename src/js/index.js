@@ -1,3 +1,4 @@
+/* eslint-disable import/imports-first */
 import aframe from 'aframe';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -8,6 +9,7 @@ import registerVideoBillboard from 'aframe-video-billboard';
 import aframeKeyboardControls from 'aframe-keyboard-controls';
 import registerMap from 'aframe-map';
 import {injectGlobal as injectGlobalStyle} from 'styled-components';
+/* eslint-enable import/imports-first */
 
 import JSGo from './components/js-go';
 

@@ -1,13 +1,13 @@
-const {readFileSync, writeFileSync} = require('fs');
-// eslint-disable-next-line import/no-extraneous-dependencies
-const cheerio = require('cheerio');
-// eslint-disable-next-line import/no-extraneous-dependencies
-const upath = require('upath');
+const buildJs = require('./build/js');
+const buildHtml = require('./build/html');
+const buildServiceWorker = require('./build/service-worker');
 
-const indexHtml = readFileSync(upath.join(process.cwd(), 'src', 'index.html'));
-
-const $ = cheerio.load(indexHtml.toString());
-
-$('script[src="js/index.js"]').attr('src', `js/index.js?v${+new Date()}`);
-
-writeFileSync(upath.join(process.cwd(), 'lib', 'index.html'), $.html());
+// Order is important
+buildJs.build()
+  .then(_ => buildServiceWorker())
+  .then(_ => buildHtml())
+  .catch(error => {
+    // eslint-disable-next-line no-console
+    console.error(error.message || error.toString());
+    process.exit(1);
+  });
