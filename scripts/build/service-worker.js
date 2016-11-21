@@ -31,6 +31,7 @@ module.exports = function generateOfflineServiceWorker() {
       `${outDir}/**/*.html`,
       `${outDir}/**/*.json`,
       `${outDir}/css/**/*.css`,
+      `${outDir}/img/**/*.{jpg,png}`,
       `${outDir}/js/**/*.js`,
     ],
 

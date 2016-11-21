@@ -140,7 +140,7 @@ const Map = React.createClass({
         setProperty(this._mapEl, 'map.center', `${long} ${lat}`);
 
         // and zoom in: 20 is very zoomed in, 0 is really zoomed out
-        setProperty(this._mapEl, 'map.zoom', '13');
+        setProperty(this._mapEl, 'map.zoom', '16');
 
         // Place the marker in the correct position
         setProperty(currentLocationEl, 'position', this._mapEl.components.map.project(long, lat));
@@ -196,11 +196,16 @@ const Map = React.createClass({
   renderAframe() {
 
     return `
-      <a-scene>
+      <a-scene fog="type: linear; color: #fff; near: 10; far: 15">
+
+        <a-assets>
+          <img id="sky-clouds" src="img/sky-clouds.jpg">
+        </a-assets>
 
         <a-map
-          width="7"
-          height="4"
+          width="35"
+          height="35"
+          map="pxToWorldRatio: 50"
           position="0 0 0"
           rotation="-90 0 0"
         >
@@ -215,10 +220,22 @@ const Map = React.createClass({
 
         </a-map>
 
-        <a-sky color="#ECECEC"></a-sky>
-
         <a-entity position="0 0.4 1">
-          <a-camera></a-camera>
+          <a-camera
+            id="camera"
+            position="0.46 1.6 -0.9"
+            rotation="-35 -250 0"
+          >
+          </a-camera>
+          <a-entity follow="#camera">
+            <a-sphere
+              radius="30"
+              scale="-1 1 1"
+              position="0 -7 0"
+              material="fog: false; shader: flat"
+              src="#sky-clouds"
+            ></a-sphere>
+          </a-entity>
         </a-entity>
       </a-scene>
     `.trim();
