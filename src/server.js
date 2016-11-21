@@ -49,10 +49,8 @@ https.createServer(options, (request, response) => {
 
       if (error.code === 'ENOENT') {
 
-        fs.readFile('./404.html', (error404, content) => {
-          response.writeHead(200, {'Content-Type': contentType});
-          response.end(content, 'utf-8');
-        });
+        response.writeHead(404, {'Content-Type': 'text/plain'});
+        response.end('Not Found', 'utf-8');
 
       } else {
         response.writeHead(500);
