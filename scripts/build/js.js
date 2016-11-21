@@ -69,7 +69,14 @@ function watch() {
   browserifyer.plugin(watchify);
 
   // listen for updates, and re-bundle then.
-  browserifyer.on('update', () => {
+  browserifyer.on('update', (updatedIds) => {
+
+    const updateDateTime = (new Date()).toLocaleTimeString();
+
+    // eslint-disable-next-line no-console
+    console.log(`[watchify][${updateDateTime}] Change detected in ${updatedIds.join(', ')}`);
+    // eslint-disable-next-line no-console
+    console.log(`[watchify][${updateDateTime}] Starting re-bundle.`);
 
     // rebundle
     browserifyBundle(browserifyer)
