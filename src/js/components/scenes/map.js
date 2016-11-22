@@ -1,6 +1,7 @@
 import aframe from 'aframe';
 import React from 'react';
 import styled, {keyframes} from 'styled-components';
+import style from './style.json';
 import {addPrefixedEventListener, domFromString} from '../../lib/dom';
 import AframeContainer from '../aframe-container';
 
@@ -32,7 +33,6 @@ const Container = styled.section`
   ${getTransitionInStyle}
   ${getTransitionOutStyle}
 `;
-
 
 const Map = React.createClass({
 
@@ -129,6 +129,8 @@ const Map = React.createClass({
       const options = {
         enableHighAccuracy: true,
       };
+
+      this._mapEl.setAttribute('map', 'style', JSON.stringify(style));
 
       // Get the user's location from the browser
       this._geoWatchId = navigator.geolocation.watchPosition(position => {
