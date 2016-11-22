@@ -41,8 +41,8 @@ Week 2
 - ~~0.0 - Su 2016-11-20~~
 
 Week 3
-- 2.5 - Mo 2016-11-21
-- 1.0 - Tu 2016-11-22
+- ~~2.5 - Mo 2016-11-21~~
+- ~~1.0 - Tu 2016-11-22~~
 - 2.5 - We 2016-11-23
 - 2.5 - Th 2016-11-24
 - 2.5 - Fr 2016-11-25
@@ -79,7 +79,7 @@ Week 4
   - 1 - Cache Foursquare data & search via Geospatial "near"
 - 1 - Google Analytics
 - 1 - Trace monitoring: https://trace.risingstack.com/
-- 4 - AR UX
+- ~~4~~ 2 - AR UX
 
 **Optional**
 
