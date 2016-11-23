@@ -45,12 +45,12 @@
     "watchify": "^3.7.0"
   },
   "dependencies": {
-    "aframe": "github:aframevr/aframe#cc824c6",
+    "aframe": "github:aframevr/aframe#9ec16ca",
     "aframe-click-drag-component": "^2.0.0",
     "aframe-extras": "^2.7.2",
     "aframe-frustum-lock-component": "^1.0.1",
     "aframe-keyboard-controls": "github:donmccurdy/aframe-keyboard-controls#830f832",
-    "aframe-map": "^2.0.5",
+    "aframe-map": "^2.0.6",
     "aframe-physics-system": "github:donmccurdy/aframe-physics-system#b130d34",
     "aframe-video-billboard": "0.0.1",
     "asap": "^2.0.5",
