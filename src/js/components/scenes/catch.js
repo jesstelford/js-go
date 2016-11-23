@@ -4,6 +4,7 @@ import asap from 'asap';
 import styled, {keyframes} from 'styled-components';
 import {addPrefixedEventListener, domFromString} from '../../lib/dom';
 import AframeContainer from '../aframe-container';
+import Button from '../button';
 
 const transitionInAnimation = keyframes`
   from { opacity: 0; }
@@ -29,6 +30,15 @@ function getTransitionOutStyle(props) {
 const Container = styled.section`
   ${getTransitionInStyle}
   ${getTransitionOutStyle}
+`;
+
+const RunButton = styled(Button)`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: white;
+  padding: 10px;
+  font-size: 2em;
 `;
 
 const Catch = React.createClass({
@@ -243,18 +253,9 @@ const Catch = React.createClass({
           onSceneLoaded={this.onSceneLoaded}
           renderAframe={this.renderAframe}
         />
-        <div
-          style={{
-            position: 'absolute',
-            top: '10px',
-            right: '10px',
-            backgroundColor: 'white',
-            padding: '10px',
-          }}
-          onClick={this.props.onGetOutOfDodge}
-        >
-          Run
-        </div>
+        <RunButton onClick={this.props.onGetOutOfDodge}>
+          🏃
+        </RunButton>
       </Container>
     );
   },

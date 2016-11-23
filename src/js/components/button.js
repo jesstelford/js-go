@@ -18,4 +18,8 @@ export default styled.button`
   &:focus {
     outline: none;
   }
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
