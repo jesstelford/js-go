@@ -69,7 +69,7 @@ Week 4
 - ~~1 - Offline~~
 - ~~1 - Pokestops - Believable number~~
 - ~~1 - Pokestops - look-at squashed cylinder~~
-- 2 - Pokemon - Actually show them on the map / touchable
+- ~~2 - Pokemon - Actually show them on the map / touchable~~
 - 2 - Aspect ratio / AR positioning correction
 - 2 - Node site
   - 1 - Foursquare API requests
