@@ -55,15 +55,20 @@ const Map = React.createClass({
             rotation="90 0 0"
             position="0 0 0.25"
             color="#10d4ff"
+            segments-height="1"
+            segments-radial="4"
           ></a-cone>
           <a-sphere
             radius="0.3"
             position="0 0 0.9"
             color="#10d4ff"
+            segments-height="5"
+            segments-width="10"
           ></a-cone>
         </a-entity>
       `.trim()
     );
+
 
     this._mapEl.appendChild(marker);
 
