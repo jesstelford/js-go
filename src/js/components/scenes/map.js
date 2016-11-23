@@ -108,7 +108,6 @@ const Map = React.createClass({
       .forEach(venue => {
         venue.marker = this.addMarker();
         venueCache[venue.id] = venue;
-        console.log(`created marker at ${venue.lat} ${venue.long}`);
         venue.marker.addEventListener('click', _ => {
           console.log(`clicked marker at ${venue.lat} ${venue.long}`);
         });
