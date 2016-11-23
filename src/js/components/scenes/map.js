@@ -75,7 +75,6 @@ const Map = React.createClass({
       `.trim()
     );
 
-
     this._mapEl.appendChild(marker);
 
     return marker;
@@ -179,6 +178,7 @@ const Map = React.createClass({
           monster.el.addEventListener('click', _ => {
             // eslint-disable-next-line no-console
             console.log('clicked monster', monster);
+            this.props.onHuntMonster(monster);
           });
         });
 
@@ -261,19 +261,6 @@ const Map = React.createClass({
     if (this._scene) {
       this._scene.pause();
     }
-  },
-
-  renderMonster() {
-    return `
-      <a-box
-        static-body
-        position="0 0.5 -2"
-        width="0.5"
-        height="1"
-        depth="0.5"
-        color="#EF2D5E"
-      ></a-box>
-    `.trim();
   },
 
   renderAframe() {
@@ -365,18 +352,6 @@ const Map = React.createClass({
           onClick={this.props.onOpenMenu}
         >
           Menu
-        </div>
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '10px',
-            left: '10px',
-            backgroundColor: 'white',
-            padding: '10px',
-          }}
-          onClick={this.props.onHuntMonster}
-        >
-          Hunt!
         </div>
       </Container>
     );

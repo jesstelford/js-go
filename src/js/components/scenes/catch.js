@@ -170,7 +170,7 @@ const Catch = React.createClass({
         width="0.5"
         height="1"
         depth="0.5"
-        color="#EF2D5E"
+        color="${this.props.monster.type.colour}"
       ></a-box>
     `.trim();
   },
