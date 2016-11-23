@@ -1,11 +1,10 @@
-import aframe from 'aframe';
 import React from 'react';
 import styled, {keyframes} from 'styled-components';
 import style from './style.json';
 import {addPrefixedEventListener, domFromString} from '../../lib/dom';
+import getVenues from '../../lib/foursquare';
 import AframeContainer from '../aframe-container';
 
-const setProperty = aframe.utils.entity.setComponentProperty;
 const venueCache = {};
 
 const transitionInAnimation = keyframes`
@@ -75,39 +74,56 @@ const Map = React.createClass({
     const halfWidth = width / 2;
     const halfHeight = height / 2;
 
-    // foursquare's free venues API
-    fetch(`https://api.foursquare.com/v2/venues/explore?client_id=MWVIR52CTGVY0GZGFJB53UEUJRGJETB3SQI4KY1JWAEA1GIO&client_secret=TME3XHDYNTXQX0MMF3AME2TYW1F4KY5QUOI4RL5AP1P0GGXR&v=20161018&m=foursquare&ll=${lat},${long}&section=topPicks&time=any&day=any`)
-      .then(res => res.json())
-      .then(res => {
-        res.response.groups[0].items.map(({venue}) => ({
-          id: venue.id,
-          lat: venue.location.lat,
-          long: venue.location.lng,
-        }))
-        .filter(({id}) => !venueCache[id])
-        .forEach(venue => {
-          venue.marker = this.addMarker();
-          venueCache[venue.id] = venue;
-        });
+    const ne = this._mapEl.components.map.unproject(halfWidth, halfHeight);
+    const sw = this._mapEl.components.map.unproject(-halfWidth, -halfHeight);
 
-        Object.keys(venueCache).forEach(markerId => {
-          const venue = venueCache[markerId];
-          const position = this._mapEl.components.map.project(venue.long, venue.lat);
+    const boundingBox = {
+      ne: {
+        lat: ne[1],
+        long: ne[0],
+      },
+      sw: {
+        lat: sw[1],
+        long: sw[0],
+      },
+    };
 
-          if (
-            position.x > halfWidth
-            || position.x < -halfWidth
-            || position.y > halfHeight
-            || position.y < -halfHeight
-          ) {
-            setProperty(venue.marker, 'visible', false);
-          } else {
-            setProperty(venue.marker, 'visible', true);
-          }
-
-          setProperty(venue.marker, 'position', position);
+    getVenues(boundingBox).then(venues => {
+      venues.map(({id, location}) => ({
+        id,
+        lat: location.lat,
+        long: location.lng,
+      }))
+      .filter(({id}) => !venueCache[id])
+      .forEach(venue => {
+        venue.marker = this.addMarker();
+        venueCache[venue.id] = venue;
+        console.log(`created marker at ${venue.lat} ${venue.long}`);
+        venue.marker.addEventListener('click', _ => {
+          console.log(`clicked marker at ${venue.lat} ${venue.long}`);
         });
       });
+
+      Object.keys(venueCache).forEach(markerId => {
+        const venue = venueCache[markerId];
+        const position = this._mapEl.components.map.project(venue.long, venue.lat);
+
+        if (
+          position.x > halfWidth
+          || position.x < -halfWidth
+          || position.y > halfHeight
+          || position.y < -halfHeight
+        ) {
+          venue.marker.setAttribute('visible', false);
+          venue.marker.setAttribute('material', 'visible', false);
+        } else {
+          venue.marker.setAttribute('visible', true);
+          venue.marker.setAttribute('material', 'visible', true);
+        }
+
+        venue.marker.setAttribute('position', position);
+      });
+    });
   },
 
   onSceneLoaded(scene) {
@@ -139,14 +155,16 @@ const Map = React.createClass({
         const lat = position.coords.latitude;
 
         // center the map on that location
-        setProperty(this._mapEl, 'map.center', `${long} ${lat}`);
+        this._mapEl.setAttribute('map', 'center', `${long} ${lat}`);
 
         // and zoom in: 20 is very zoomed in, 0 is really zoomed out
-        setProperty(this._mapEl, 'map.zoom', '16');
+        this._mapEl.setAttribute('map', 'zoom', '16');
 
         // Place the marker in the correct position
-        setProperty(currentLocationEl, 'position', this._mapEl.components.map.project(long, lat));
-        setProperty(currentLocationEl, 'visible', true);
+        // setProperty(currentLocationEl, 'position', this._mapEl.components.map.project(long, lat));
+        currentLocationEl.setAttribute('position', {x: 0, y: 0, z: 0});
+        currentLocationEl.setAttribute('visible', true);
+        currentLocationEl.setAttribute('material', 'visible', true);
 
         this.onLocationUpdate(lat, long, geomData.width, geomData.height);
 
