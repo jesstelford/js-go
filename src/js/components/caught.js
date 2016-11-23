@@ -55,6 +55,9 @@ NextButton.defaultProps = {
 const Stats = styled.div`
   display: flex;
   flex-direction: row;
+  margin: 0 20px;
+  border: 1px solid silver;
+  border-radius: 5px;
 `;
 
 const Stat = styled.p`
