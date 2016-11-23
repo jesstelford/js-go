@@ -43,7 +43,7 @@ Week 2
 Week 3
 - ~~2.5 - Mo 2016-11-21~~
 - ~~1.0 - Tu 2016-11-22~~
-- 2.5 - We 2016-11-23
+- ~~2.5~~ 1 - We 2016-11-23
 - 2.5 - Th 2016-11-24
 - 2.5 - Fr 2016-11-25
 - 3.5 - Sa 2016-11-26
@@ -67,7 +67,7 @@ Week 4
 - ~~1 - State management / transitions~~
 - ~~2 - Save to homescreen~~
 - ~~1 - Offline~~
-- 1 - Pokestops - Believable number
+- ~~1 - Pokestops - Believable number~~
 - 1 - Pokestops - look-at squashed cylinder
 - 2 - Pokemon - Actually show them on the map / touchable
 - 2 - Aspect ratio / AR positioning correction
