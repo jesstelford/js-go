@@ -1,4 +1,4 @@
-import aframe from 'aframe';
+import aframe from 'aframe/src/index';
 import React from 'react';
 import asap from 'asap';
 import styled, {keyframes} from 'styled-components';

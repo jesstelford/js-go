@@ -49,12 +49,17 @@ const Map = React.createClass({
       `
         <a-entity>
           <a-cone
-            height="0.5"
+            height="0.8"
             radius-bottom="0"
-            radius-top="0.05"
+            radius-top="0.1"
             rotation="90 0 0"
             position="0 0 0.25"
-            color="#f00"
+            color="#10d4ff"
+          ></a-cone>
+          <a-sphere
+            radius="0.3"
+            position="0 0 0.9"
+            color="#10d4ff"
           ></a-cone>
         </a-entity>
       `.trim()
@@ -245,6 +250,7 @@ const Map = React.createClass({
             id="camera"
             position="0.46 1.6 -0.9"
             rotation="-35 -250 0"
+            mouse-cursor
           >
           </a-camera>
           <a-entity follow="#camera">
