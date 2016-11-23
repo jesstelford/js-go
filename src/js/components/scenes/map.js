@@ -4,8 +4,10 @@ import style from './style.json';
 import {addPrefixedEventListener, domFromString} from '../../lib/dom';
 import getVenues from '../../lib/foursquare';
 import AframeContainer from '../aframe-container';
+import getMonsters from '../../lib/monsters';
 
 const venueCache = {};
+const monsterCache = {};
 
 const transitionInAnimation = keyframes`
   from { opacity: 0; }
@@ -26,6 +28,10 @@ function getTransitionInStyle(props) {
 
 function getTransitionOutStyle(props) {
   return props.transitionOut ? `animation: ${transitionOutAnimation} 1s ease-out` : '';
+}
+
+function getMonsterCacheKey({lat, long}) {
+  return `${lat}x${long}`;
 }
 
 const Container = styled.section`
@@ -64,7 +70,7 @@ const Map = React.createClass({
             color="#10d4ff"
             segments-height="5"
             segments-width="10"
-          ></a-cone>
+          ></a-sphere>
         </a-entity>
       `.trim()
     );
@@ -73,6 +79,49 @@ const Map = React.createClass({
     this._mapEl.appendChild(marker);
 
     return marker;
+
+  },
+
+  addMonster(monster) {
+
+    const monsterEl = domFromString(
+      `
+        <a-sphere
+          radius="0.3"
+          position="0 0 1.5"
+          color="${monster.type.colour}"
+          segments-height="5"
+          segments-width="10"
+        ></a-sphere>
+      `.trim()
+    );
+
+    this._mapEl.appendChild(monsterEl);
+
+    return monsterEl;
+
+  },
+
+  displayIfOnVisibleMap(el, lat, long, width, height) {
+
+    const halfWidth = width / 2;
+    const halfHeight = height / 2;
+
+    const position = this._mapEl.components.map.project(long, lat);
+
+    if (
+      position.x > halfWidth
+      || position.x < -halfWidth
+      || position.y > halfHeight
+      || position.y < -halfHeight
+    ) {
+      el.setAttribute('visible', false);
+      el.setAttribute('material', 'visible', false);
+    } else {
+      el.setAttribute('visible', true);
+      el.setAttribute('material', 'visible', true);
+      el.setAttribute('position', position);
+    }
 
   },
 
@@ -109,28 +158,33 @@ const Map = React.createClass({
         venue.marker = this.addMarker();
         venueCache[venue.id] = venue;
         venue.marker.addEventListener('click', _ => {
+          // eslint-disable-next-line no-console
           console.log(`clicked marker at ${venue.lat} ${venue.long}`);
         });
       });
 
       Object.keys(venueCache).forEach(markerId => {
         const venue = venueCache[markerId];
-        const position = this._mapEl.components.map.project(venue.long, venue.lat);
+        this.displayIfOnVisibleMap(venue.marker, venue.lat, venue.long, width, height);
+      });
+    });
 
-        if (
-          position.x > halfWidth
-          || position.x < -halfWidth
-          || position.y > halfHeight
-          || position.y < -halfHeight
-        ) {
-          venue.marker.setAttribute('visible', false);
-          venue.marker.setAttribute('material', 'visible', false);
-        } else {
-          venue.marker.setAttribute('visible', true);
-          venue.marker.setAttribute('material', 'visible', true);
-        }
+    getMonsters(boundingBox).then(monsters => {
 
-        venue.marker.setAttribute('position', position);
+      monsters
+        .filter(monster => !monsterCache[getMonsterCacheKey(monster)])
+        .forEach(monster => {
+          monster.el = this.addMonster(monster);
+          monsterCache[getMonsterCacheKey(monster)] = monster;
+          monster.el.addEventListener('click', _ => {
+            // eslint-disable-next-line no-console
+            console.log('clicked monster', monster);
+          });
+        });
+
+      Object.keys(monsterCache).forEach(monsterCacheKey => {
+        const monster = monsterCache[monsterCacheKey];
+        this.displayIfOnVisibleMap(monster.el, monster.lat, monster.long, width, height);
       });
     });
   },
