@@ -3,6 +3,7 @@ import React from 'react';
 import asap from 'asap';
 import styled, {keyframes} from 'styled-components';
 import {addPrefixedEventListener, domFromString} from '../../lib/dom';
+import monsterPropTypes from '../monster-prop-types';
 import AframeContainer from '../aframe-container';
 import Button from '../button';
 
@@ -48,6 +49,7 @@ const Catch = React.createClass({
     onCatchMonster: React.PropTypes.func.isRequired,
     transitionIn: React.PropTypes.func,
     transitionOut: React.PropTypes.func,
+    monster: React.PropTypes.shape(monsterPropTypes),
   },
 
   onMonsterBallCollision({detail: {body: {el: collidedWith}}}) {
