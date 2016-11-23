@@ -68,7 +68,7 @@ Week 4
 - ~~2 - Save to homescreen~~
 - ~~1 - Offline~~
 - ~~1 - Pokestops - Believable number~~
-- 1 - Pokestops - look-at squashed cylinder
+- ~~1 - Pokestops - look-at squashed cylinder~~
 - 2 - Pokemon - Actually show them on the map / touchable
 - 2 - Aspect ratio / AR positioning correction
 - 2 - Node site
@@ -83,7 +83,8 @@ Week 4
 
 **Optional**
 
-- 1 - Pokestops - Touchable / look-at
+- 1 - Pokestops
+  - Get items (using a spring to "fling" them at the camera)
 - 1 - Pokestops - State for new items
 - 3 - Better looking 3D models
   - 1 - Pokestops
