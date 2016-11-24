@@ -50,7 +50,7 @@
     "aframe-extras": "^2.7.2",
     "aframe-frustum-lock-component": "^1.0.1",
     "aframe-keyboard-controls": "github:donmccurdy/aframe-keyboard-controls#830f832",
-    "aframe-map": "^2.0.6",
+    "aframe-map": "^2.1.0",
     "aframe-mouse-cursor-component": "^0.2.1",
     "aframe-physics-system": "github:donmccurdy/aframe-physics-system#b130d34",
     "aframe-video-billboard": "0.0.1",
