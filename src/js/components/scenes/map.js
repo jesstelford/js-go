@@ -217,11 +217,12 @@ const Map = React.createClass({
         const long = position.coords.longitude;
         const lat = position.coords.latitude;
 
+        // and zoom in: 20 is very zoomed in, 0 is really zoomed out
+        this._mapEl.setAttribute('map', 'zoom', '16');
+
         // center the map on that location
         this._mapEl.setAttribute('map', 'center', `${long} ${lat}`);
 
-        // and zoom in: 20 is very zoomed in, 0 is really zoomed out
-        this._mapEl.setAttribute('map', 'zoom', '16');
 
         // Place the marker in the correct position
         // setProperty(currentLocationEl, 'position', this._mapEl.components.map.project(long, lat));
@@ -241,6 +242,7 @@ const Map = React.createClass({
       if (!this.state.hasLoaded) {
         this.setState({hasLoaded: true});
       }
+
     });
 
   },
@@ -275,7 +277,7 @@ const Map = React.createClass({
         <a-map
           width="35"
           height="35"
-          map="pxToWorldRatio: 50"
+          map="pxToWorldRatio: 50; center: 150.9123624 -33.696467; zoom: 16",
           position="0 0 0"
           rotation="-90 0 0"
         >
