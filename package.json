@@ -11,7 +11,8 @@
     "watch": "npm run build:prepare && NODE_ENV=development node ./scripts/watch.js",
     "build:dev": "npm run build:prepare && NODE_ENV=development node ./scripts/build.js",
     "build:prod": "npm run build:prepare && NODE_ENV=production node ./scripts/build.js",
-    "launch": "google-chrome --user-data-dir=/tmp/foo --ignore-certificate-errors --unsafely-treat-insecure-origin-as-secure=https://localhost"
+    "launch": "google-chrome --user-data-dir=/tmp/foo --ignore-certificate-errors --unsafely-treat-insecure-origin-as-secure=https://localhost",
+    "wrap": "node ./scripts/fix-peer-deps.js && npm shrinkwrap"
   },
   "keywords": [],
   "author": "",
