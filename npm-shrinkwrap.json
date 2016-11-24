@@ -44,7 +44,7 @@
     },
     "aframe-map": {
       "version": "2.1.1",
-      "from": "aframe-map@>=2.0.6 <3.0.0",
+      "from": "aframe-map@>=2.1.0 <3.0.0",
       "resolved": "http://registry.npmjs.org/aframe-map/-/aframe-map-2.1.1.tgz"
     },
     "aframe-mouse-cursor-component": {
