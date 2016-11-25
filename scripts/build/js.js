@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const browserify = require('browserify');
 const watchify = require('watchify');
-const envify = require('envify');
+const envify = require('envify/custom');
 const mkdirp = require('mkdirp');
 /* eslint-enable import/no-extraneous-dependencies */
 const fs = require('fs');
@@ -30,10 +30,13 @@ function initBrowserify(opts) {
   ));
 
   browserifyer.transform(
-    envify,
-    {
-      global: true,
-    }
+    envify(Object.assign(
+      {
+        INSPECTOR_VERSION: process.env.NODE_ENV === 'development' ? 'dev' : 'production',
+      },
+      process.env
+    )),
+    {global: true}
   );
 
   browserifyer.transform('babelify');
