@@ -4,8 +4,8 @@ const buildServiceWorker = require('./build/service-worker');
 
 // Order is important
 buildJs.build()
-  .then(_ => buildServiceWorker())
   .then(_ => buildHtml())
+  .then(_ => buildServiceWorker())
   .catch(error => {
     // eslint-disable-next-line no-console
     console.error(error.message || error.toString());

@@ -24,7 +24,7 @@ module.exports = function generateOfflineServiceWorker() {
     maximumFileSizeToCacheInBytes: (process.env.NODE_ENV === 'production' ? 2.5 : 14) * 1024 * 1024,
 
     // Any query params to ignore when checking URL for cachability
-    ignoreUrlParametersMatching: [/^utm_/, /^v\d+/],
+    ignoreUrlParametersMatching: [/^utm_/],
 
     // The things to cache
     staticFileGlobs: [
@@ -41,24 +41,40 @@ module.exports = function generateOfflineServiceWorker() {
     },
 
     // sw-toolbox bridge
-    runtimeCaching: [{
+    runtimeCaching: [
+      {
+        urlPattern: /osm2vectortiles/,
+        // cacheFirst because we set hard expiry limits below.
+        // If they've expired, hit the network.
+        handler: 'cacheFirst',
+        method: 'get',
+        options: {
+          debug: process.env.NODE_ENV !== 'production',
+          cache: {
+            maxEntries: 100,
 
-      urlPattern: /\/osm2vectortiles\//,
-      // cacheFirst because we set hard expiry limits below.
-      // If they've expired, hit the network.
-      handler: 'cacheFirst',
-      method: 'get',
-      options: {
-        debug: process.env.NODE_ENV !== 'production',
-        cache: {
-          // Only store the most recent 10 entries
-          maxEntries: 10,
-
-          maxAgeSeconds: 3600,
-          name: 'osm2vectortiles-cache',
+            maxAgeSeconds: 3600,
+            name: 'osm2vectortiles-cache',
+          },
         },
       },
-    }],
+      {
+        urlPattern: /api\.foursquare\.com/,
+        // cacheFirst because we set hard expiry limits below.
+        // If they've expired, hit the network.
+        handler: 'cacheFirst',
+        method: 'get',
+        options: {
+          debug: process.env.NODE_ENV !== 'production',
+          cache: {
+            maxEntries: 20,
+
+            maxAgeSeconds: 3600,
+            name: 'foursquare-cache',
+          },
+        },
+      },
+    ],
 
     // Once all assets are cache-busted in their URL, enable this rule
     // dontCacheBustUrlsMatching: /./,
