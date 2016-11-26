@@ -21,7 +21,7 @@ module.exports = function generateOfflineServiceWorker() {
     // Print out which files are cached at build time
     verbose: true,
 
-    maximumFileSizeToCacheInBytes: (process.env.NODE_ENV === 'production' ? 2.5 : 14) * 1024 * 1024,
+    maximumFileSizeToCacheInBytes: (process.env.NODE_ENV === 'production' ? 5 : 14) * 1024 * 1024,
 
     // Any query params to ignore when checking URL for cachability
     ignoreUrlParametersMatching: [/^utm_/],
