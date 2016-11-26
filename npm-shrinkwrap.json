@@ -19,8 +19,8 @@
     },
     "aframe": {
       "version": "0.4.0",
-      "from": "aframevr/aframe#9ec16ca",
-      "resolved": "git://github.com/aframevr/aframe.git#9ec16ca896766865eda9a296e81cd170c447168e"
+      "from": "jesstelford/aframe#master-plus-fix",
+      "resolved": "git://github.com/jesstelford/aframe.git#acfffd33f92714e2a4a011c1934d92091abeae52"
     },
     "aframe-click-drag-component": {
       "version": "2.0.0",
@@ -28,9 +28,9 @@
       "resolved": "http://registry.npmjs.org/aframe-click-drag-component/-/aframe-click-drag-component-2.0.0.tgz"
     },
     "aframe-extras": {
-      "version": "2.7.3",
+      "version": "2.7.4",
       "from": "aframe-extras@>=2.7.2 <3.0.0",
-      "resolved": "http://registry.npmjs.org/aframe-extras/-/aframe-extras-2.7.3.tgz"
+      "resolved": "http://registry.npmjs.org/aframe-extras/-/aframe-extras-2.7.4.tgz"
     },
     "aframe-frustum-lock-component": {
       "version": "1.0.1",
@@ -65,9 +65,9 @@
       "resolved": "git://github.com/donmccurdy/aframe-physics-system.git#b130d34833c8adad592e748ca082634f24e31008"
     },
     "aframe-video-billboard": {
-      "version": "0.0.1",
-      "from": "aframe-video-billboard@0.0.1",
-      "resolved": "http://registry.npmjs.org/aframe-video-billboard/-/aframe-video-billboard-0.0.1.tgz"
+      "version": "1.0.2",
+      "from": "aframe-video-billboard@>=1.0.2 <2.0.0",
+      "resolved": "https://registry.npmjs.org/aframe-video-billboard/-/aframe-video-billboard-1.0.2.tgz"
     },
     "ajv": {
       "version": "4.9.0",
@@ -2401,7 +2401,14 @@
     "gulp-uglify": {
       "version": "0.3.2",
       "from": "gulp-uglify@>=0.3.1 <0.4.0",
-      "resolved": "http://registry.npmjs.org/gulp-uglify/-/gulp-uglify-0.3.2.tgz"
+      "resolved": "http://registry.npmjs.org/gulp-uglify/-/gulp-uglify-0.3.2.tgz",
+      "dependencies": {
+        "uglify-js": {
+          "version": "2.4.6",
+          "from": "uglify-js@2.4.6",
+          "resolved": "http://registry.npmjs.org/uglify-js/-/uglify-js-2.4.6.tgz"
+        }
+      }
     },
     "gulp-util": {
       "version": "3.0.7",
@@ -4585,6 +4592,11 @@
       "from": "opener@>=1.4.1 <2.0.0",
       "resolved": "http://registry.npmjs.org/opener/-/opener-1.4.2.tgz"
     },
+    "optimist": {
+      "version": "0.3.7",
+      "from": "optimist@>=0.3.5 <0.4.0",
+      "resolved": "http://registry.npmjs.org/optimist/-/optimist-0.3.7.tgz"
+    },
     "optionator": {
       "version": "0.8.2",
       "from": "optionator@>=0.8.1 <0.9.0",
@@ -4979,9 +4991,9 @@
       "resolved": "http://registry.npmjs.org/randexp/-/randexp-0.4.3.tgz"
     },
     "randomatic": {
-      "version": "1.1.5",
+      "version": "1.1.6",
       "from": "randomatic@>=1.1.3 <2.0.0",
-      "resolved": "http://registry.npmjs.org/randomatic/-/randomatic-1.1.5.tgz"
+      "resolved": "http://registry.npmjs.org/randomatic/-/randomatic-1.1.6.tgz"
     },
     "randombytes": {
       "version": "2.0.3",
