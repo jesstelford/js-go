@@ -8,10 +8,11 @@
     "test:lint": "eslint ./src && stylelint './src/components/**/*.js'",
     "start": "sh -c 'cd lib && node server.js'",
     "build:prepare": "node ./scripts/prepare.js",
-    "watch": "npm run build:prepare && NODE_ENV=development node ./scripts/watch.js & npm run start",
+    "watch": "npm run build:prepare && NODE_ENV=development node ./scripts/watch.js",
     "build:dev": "npm run build:prepare && NODE_ENV=development node ./scripts/build.js",
     "build:prod": "npm run build:prepare && NODE_ENV=production node ./scripts/build.js",
-    "launch": "google-chrome --user-data-dir=/tmp/foo --ignore-certificate-errors --unsafely-treat-insecure-origin-as-secure=https://localhost"
+    "launch": "google-chrome --user-data-dir=/tmp/foo --ignore-certificate-errors --unsafely-treat-insecure-origin-as-secure=https://localhost",
+    "wrap": "node ./scripts/fix-peer-deps.js && npm shrinkwrap"
   },
   "keywords": [],
   "author": "",
@@ -45,14 +46,15 @@
     "watchify": "^3.7.0"
   },
   "dependencies": {
-    "aframe": "github:aframevr/aframe#cc824c6",
+    "aframe": "github:jesstelford/aframe#master-plus-fix",
     "aframe-click-drag-component": "^2.0.0",
     "aframe-extras": "^2.7.2",
     "aframe-frustum-lock-component": "^1.0.1",
     "aframe-keyboard-controls": "github:donmccurdy/aframe-keyboard-controls#830f832",
-    "aframe-map": "^2.0.3",
+    "aframe-map": "^2.1.0",
+    "aframe-mouse-cursor-component": "^0.2.1",
     "aframe-physics-system": "github:donmccurdy/aframe-physics-system#b130d34",
-    "aframe-video-billboard": "0.0.1",
+    "aframe-video-billboard": "^1.0.2",
     "asap": "^2.0.5",
     "deep-equal": "^1.0.1",
     "pascal-case": "^2.0.0",

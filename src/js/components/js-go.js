@@ -15,14 +15,14 @@ const JSGo = React.createClass({
 
   getInitialState() {
     return {
-      gameState: 'catch',
+      gameState: 'map',
     };
   },
 
-  handleHuntMonster(/* monster */) {
-    // TODO: Flesh this out some more?
+  handleHuntMonster(monster) {
     this.setState({
       gameState: 'catch',
+      monster,
     });
   },
 
@@ -82,7 +82,7 @@ const JSGo = React.createClass({
     return (
       <MapScene
         onOpenMenu={_ => this.triggerTransition(this.handleOpenMenu)}
-        onHuntMonster={_ => this.triggerTransition(this.handleHuntMonster)}
+        onHuntMonster={monster => this.triggerTransition(this.handleHuntMonster.bind(this, monster))}
         transitionOut={this.state.transitioningOut && this.state.onTransitionEnd}
         transitionIn={this.state.transitioningIn && this.state.onTransitionEnd}
       />
@@ -92,6 +92,7 @@ const JSGo = React.createClass({
   renderCatchState() {
     return (
       <CatchScene
+        monster={this.state.monster}
         onGetOutOfDodge={_ => this.triggerTransition(this.handleRunFromMonster)}
         onCatchMonster={_ => this.triggerTransition(this.handleCatchMonster)}
         transitionOut={this.state.transitioningOut && this.state.onTransitionEnd}
@@ -106,16 +107,7 @@ const JSGo = React.createClass({
         onDone={_ => this.triggerTransition(this.handleCaughtMonsterNext)}
         transitionOut={this.state.transitioningOut && this.state.onTransitionEnd}
         transitionIn={this.state.transitioningIn && this.state.onTransitionEnd}
-        name="The Thing"
-        type={{
-          colour: 'green',
-          name: 'Gelatinous',
-        }}
-        stats={{
-          hp: 100,
-          attack: 42,
-          defence: 35,
-        }}
+        {...this.state.monster}
       />
     );
   },

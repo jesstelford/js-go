@@ -41,16 +41,17 @@ Week 2
 - ~~0.0 - Su 2016-11-20~~
 
 Week 3
-- 2.5 - Mo 2016-11-21
-- 1.0 - Tu 2016-11-22
-- 2.5 - We 2016-11-23
-- 2.5 - Th 2016-11-24
-- 2.5 - Fr 2016-11-25
+- ~~2.5 - Mo 2016-11-21~~
+- ~~1.0 - Tu 2016-11-22~~
+- ~~2.5 - We 2016-11-23~~
+- ~~2.5 - Th 2016-11-24~~
+- ~~2.5 - Fr 2016-11-25~~
 - 3.5 - Sa 2016-11-26
 - 1.5 - Su 2016-11-27
 
 Week 4
 - 2.5 - Mo 2016-11-28
+- 2.0 - Tu 2016-11-29
 
 **31.5 hr - Total**
 
@@ -67,9 +68,9 @@ Week 4
 - ~~1 - State management / transitions~~
 - ~~2 - Save to homescreen~~
 - ~~1 - Offline~~
-- 1 - Pokestops - Believable number
-- 1 - Pokestops - look-at squashed cylinder
-- 2 - Pokemon - Actually show them on the map / touchable
+- ~~1 - Pokestops - Believable number~~
+- ~~1 - Pokestops - look-at squashed cylinder~~
+- ~~2 - Pokemon - Actually show them on the map / touchable~~
 - 2 - Aspect ratio / AR positioning correction
 - 2 - Node site
   - 1 - Foursquare API requests
@@ -79,11 +80,12 @@ Week 4
   - 1 - Cache Foursquare data & search via Geospatial "near"
 - 1 - Google Analytics
 - 1 - Trace monitoring: https://trace.risingstack.com/
-- 4 - AR UX
+- ~~4~~ 2 - AR UX
 
 **Optional**
 
-- 1 - Pokestops - Touchable / look-at
+- 1 - Pokestops
+  - Get items (using a spring to "fling" them at the camera)
 - 1 - Pokestops - State for new items
 - 3 - Better looking 3D models
   - 1 - Pokestops

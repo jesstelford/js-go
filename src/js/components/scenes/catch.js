@@ -1,9 +1,11 @@
-import aframe from 'aframe';
+import aframe from 'aframe/src/index';
 import React from 'react';
 import asap from 'asap';
 import styled, {keyframes} from 'styled-components';
 import {addPrefixedEventListener, domFromString} from '../../lib/dom';
+import monsterPropTypes from '../monster-prop-types';
 import AframeContainer from '../aframe-container';
+import Button from '../button';
 
 const transitionInAnimation = keyframes`
   from { opacity: 0; }
@@ -31,6 +33,15 @@ const Container = styled.section`
   ${getTransitionOutStyle}
 `;
 
+const RunButton = styled(Button)`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: white;
+  padding: 10px;
+  font-size: 2em;
+`;
+
 const Catch = React.createClass({
 
   propTypes: {
@@ -38,6 +49,7 @@ const Catch = React.createClass({
     onCatchMonster: React.PropTypes.func.isRequired,
     transitionIn: React.PropTypes.func,
     transitionOut: React.PropTypes.func,
+    monster: React.PropTypes.shape(monsterPropTypes),
   },
 
   onMonsterBallCollision({detail: {body: {el: collidedWith}}}) {
@@ -155,6 +167,7 @@ const Catch = React.createClass({
         id="monster-ball"
         ${this._ballInFlight ? 'dynamic-body="mass: 20"' : 'click-drag'}
         position="${this._ballPosition || '0 -0.5 -1'}"
+        rotation="0 0 0"
         radius="0.1"
         color="#EF2D5E"
       ></a-sphere>
@@ -170,7 +183,7 @@ const Catch = React.createClass({
         width="0.5"
         height="1"
         depth="0.5"
-        color="#EF2D5E"
+        color="${this.props.monster.type.colour}"
       ></a-box>
     `.trim();
   },
@@ -243,18 +256,9 @@ const Catch = React.createClass({
           onSceneLoaded={this.onSceneLoaded}
           renderAframe={this.renderAframe}
         />
-        <div
-          style={{
-            position: 'absolute',
-            top: '10px',
-            right: '10px',
-            backgroundColor: 'white',
-            padding: '10px',
-          }}
-          onClick={this.props.onGetOutOfDodge}
-        >
-          Run
-        </div>
+        <RunButton onClick={this.props.onGetOutOfDodge}>
+          🏃
+        </RunButton>
       </Container>
     );
   },

@@ -7,7 +7,8 @@ Promise.all([
   cprPromise('src/server.js', 'lib/', {overwrite: true}),
   cprPromise('src/key.pem', 'lib/', {overwrite: true}),
   cprPromise('src/cert.pem', 'lib/', {overwrite: true}),
-  cprPromise('src/css', 'lib/', {overwrite: true}),
+  cprPromise('src/css', 'lib/css/', {overwrite: true}),
+  cprPromise('src/img', 'lib/img/', {overwrite: true}),
   cprPromise('src/js/service-worker-registration.js', 'lib/js/', {overwrite: true}),
 ]).catch(error => {
   // eslint-disable-next-line no-console

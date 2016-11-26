@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const browserify = require('browserify');
 const watchify = require('watchify');
-const envify = require('envify');
+const envify = require('envify/custom');
 const mkdirp = require('mkdirp');
 /* eslint-enable import/no-extraneous-dependencies */
 const fs = require('fs');
@@ -30,10 +30,13 @@ function initBrowserify(opts) {
   ));
 
   browserifyer.transform(
-    envify,
-    {
-      global: true,
-    }
+    envify(Object.assign(
+      {
+        INSPECTOR_VERSION: process.env.NODE_ENV === 'development' ? 'dev' : 'production',
+      },
+      process.env
+    )),
+    {global: true}
   );
 
   browserifyer.transform('babelify');
@@ -69,7 +72,14 @@ function watch() {
   browserifyer.plugin(watchify);
 
   // listen for updates, and re-bundle then.
-  browserifyer.on('update', () => {
+  browserifyer.on('update', (updatedIds) => {
+
+    const updateDateTime = (new Date()).toLocaleTimeString();
+
+    // eslint-disable-next-line no-console
+    console.log(`[watchify][${updateDateTime}] Change detected in ${updatedIds.join(', ')}`);
+    // eslint-disable-next-line no-console
+    console.log(`[watchify][${updateDateTime}] Starting re-bundle.`);
 
     // rebundle
     browserifyBundle(browserifyer)

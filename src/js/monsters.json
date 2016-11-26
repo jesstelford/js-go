@@ -1,0 +1,14 @@
+[
+  {
+    "name": "The Thing",
+    "type": {
+      "colour": "green",
+      "name": "Gelatinous"
+    },
+    "stats": {
+      "hp": 100,
+      "attack": 42,
+      "defence": 35
+    }
+  }
+]

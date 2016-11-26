@@ -1,14 +1,16 @@
 /* eslint-disable import/imports-first */
-import aframe from 'aframe';
+import aframe from 'aframe/src/index';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import aframeExtras from 'aframe-extras';
 import registerClickDragComponent from 'aframe-click-drag-component';
 import registerFrustumLockComponent from 'aframe-frustum-lock-component';
 import registerVideoBillboard from 'aframe-video-billboard';
+import registerFollowComponent from './components/components/follow';
 import aframeKeyboardControls from 'aframe-keyboard-controls';
 import registerMap from 'aframe-map';
 import {injectGlobal as injectGlobalStyle} from 'styled-components';
+import 'aframe-mouse-cursor-component';
 /* eslint-enable import/imports-first */
 
 import JSGo from './components/js-go';
@@ -19,6 +21,7 @@ aframe.registerComponent('keyboard-controls', aframeKeyboardControls);
 registerClickDragComponent(aframe);
 registerFrustumLockComponent(aframe);
 registerVideoBillboard(aframe);
+registerFollowComponent(aframe);
 registerMap(aframe);
 aframeExtras.physics.registerAll(aframe);
 aframeExtras.controls.registerAll(aframe);
