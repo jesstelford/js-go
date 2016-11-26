@@ -88,9 +88,10 @@ function watch() {
         // eslint-disable-next-line no-console
         console.log(`[browserify][${dateTime}] Bundle written to ${fileWrittenTo}`);
       })
+      // html first (fingerprints files, etc)
+      .then(() => buildHtml())
       // Then rebuild the service worker
       .then(() => buildServiceWorker())
-      .then(() => buildHtml())
       .catch(bundleError => {
         // eslint-disable-next-line no-console
         console.error(bundleError.message || bundleError.toString());
